@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>海拥 | 音乐播放器</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0">
+		<meta name="keywords" content="工具" />
+		<meta name="description" content="工具 | 音乐播放器;立志打造一个拥有100个小游戏的摸鱼网站。Made By Haiyong，技术支持——海拥" /> 
+		<meta name="author" content="海拥(http://haiyong.site/moyu)" />
+		<meta name="copyright" content="海拥(http://haiyong.site/moyu)" />
+		<link rel="icon" href="http://haiyong.site/wp-content/uploads/2021/07/cropped-59255587-1-192x192.jpg" sizes="192x192" />
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+			
+			*{
+			    margin: 0;
+			    padding: 0;
+			    box-sizing: border-box;
+			}
+			
+			:root{
+			    --background: #141414;
+			    --text-color: #fff;
+			    --primary-color: #63ff69;
+			    --secondary-color: #000;
+			    --alpha-color: rgba(0, 0, 0, 0.5);
+			    --shadow: 0 15px 40px var(--alpha-color);
+			}
+			
+			html{
+			    background: var(--background);
+			    display: flex;
+			    justify-content: center;
+			}
+			
+			body{
+			    width: 100%;
+			    height: 100vh;
+			    max-width: 375px;
+			    position: relative;
+			    background: var(--background);
+			    font-family: 'roboto', sans-serif;
+			    color: var(--text-color);
+			}
+			
+			::-webkit-scrollbar{
+			    display: none;
+			}
+			
+			/* home section */
+			
+			.home-section{
+			    width: 100%;
+			    padding: 20px;
+			    height: 100%;
+			    padding-bottom: 100px;
+			    overflow-y: auto;
+			}
+			
+			/* carousel */
+			
+			.carousel{
+			    width: 100%;
+			    height: 200px;
+			    overflow: hidden;
+			    border-radius: 20px;
+			    box-shadow: var(--shadow);
+			    position: relative;
+			}
+			
+			.carousel img{
+			    position: absolute;
+			    width: 100%;
+			    height: 100%;
+			    object-fit: cover;
+			    opacity: 0;
+			    transition: 1s;
+			}
+			
+			.carousel img.active{
+			    opacity: 1;
+			}
+			
+			.heading{
+			    margin: 30px 0 10px;
+			    text-transform: capitalize;
+			    font-weight: 400;
+			    font-size: 30px;
+			}
+			
+			/* playlists card */
+			
+			.playlists-group{
+			    position: relative;
+			    width: 100%;
+			    min-height: 200px;
+			    height: auto;
+			    display: flex;
+			    flex-wrap: nowrap;
+			    overflow-x: auto;
+			}
+			
+			.playlist-card{
+			    flex: 0 0 auto;
+			    max-width: 150px;
+			    height: 100%;
+			    margin-right: 20px;
+			}
+			
+			.playlist-card-img{
+			    width: 100%;
+			    height: 150px;
+			    object-fit: cover;
+			    border-radius: 20px;
+			}
+			
+			.playlist-card-name{
+			    width: 100%;
+			    text-align: justify;
+			    font-size: 20px;
+			    text-transform: capitalize;
+			    padding: 5px;
+			}
+			* music player */
+			
+			/* minimize view */
+			
+			.music-player-section{
+			    width: 100%;
+			    height: 100px;
+			    position: fixed;
+			    bottom: 0;
+			    left: 0;
+			    background: var(--alpha-color);
+			    backdrop-filter: blur(50px);
+			    transition: 1s;
+			}
+			
+			.music-seek-bar{
+			    -webkit-appearance: none;
+			    width: 100%;
+			    position: absolute;
+			    top: -4px;
+			    height: 8px;
+			    background: var(--secondary-color);
+			    overflow: hidden;
+			}
+			
+			.music-seek-bar::-webkit-slider-thumb{
+			    -webkit-appearance: none;
+			    height: 10px;
+			    width: 5px;
+			    background: var(--primary-color);
+			    cursor: pointer;
+			    box-shadow: -400px 0 0 400px var(--primary-color);
+			}
+			
+			.current-song-name{
+			    font-weight: 300;
+			    font-size: 20px;
+			    text-align: center;
+			    margin-top: 5px;
+			    text-transform: capitalize;
+			}
+			
+			.controls{
+			    position: relative;
+			    width: 80%;
+			    margin: auto;
+			    display: flex;
+			    justify-content: center;
+			    align-items: center;
+			    height: 60px;
+			    font-size: 30px;
+			}
+			
+			.controls span{
+			    display: none;
+			    opacity: 0;
+			    transition: 1s;
+			}
+			
+			.music-player-section.active .controls{
+			    justify-content: space-between;
+			}
+			
+			.music-player-section.active .controls span{
+			    font-size: 25px;
+			    display: block;
+			    opacity: 0.5;
+			}
+			
+			.music-player-section.active .controls span.active{
+			    color: var(--primary-color);
+			    opacity: 1;
+			}
+			
+			.controls .main i{
+			    margin: 0 5px;
+			    display: none;
+			}
+			
+			.controls .main i.active{
+			    display: inline;
+			}
+			
+			/* maximize music player styles */
+			
+			.music-player-section .hide{
+			    display: none;
+			    opacity: 0;
+			    transition: 1s;
+			}
+			
+			.music-player-section.active .hide{
+			    display: block;
+			    opacity: 1;
+			}
+			
+			.music-player-section.active{
+			    width: 100%;
+			    height: 100%;
+			    padding: 30px;
+			    display: flex;
+			    flex-direction: column;
+			}
+			
+			.music-player-section.active .music-seek-bar{
+			    position: relative;
+			    display: block;
+			    border-radius: 50px;
+			    margin: auto;
+			}
+			
+			.music-player-section.active .current-song-name{
+			    font-size: 40px;
+			}
+			
+			.music-player-section.active .controls{
+			    width: 100%;
+			    font-size: 50px;
+			}
+			
+			.artist-name{
+			    text-align: center;
+			    font-size: 20px;
+			    text-transform: capitalize;
+			}
+			
+			.cover{
+			    width: 30vh;
+			    height: 30vh;
+			    object-fit: cover;
+			    margin: auto;
+			    border-radius: 20px;
+			    box-shadow: var(--shadow);
+			}
+			
+			.current-time{
+			    position: absolute;
+			    margin-top: 5px;
+			    left: 30px;
+			}
+			
+			.duration{
+			    position: absolute;
+			    margin-top: 5px;
+			    right: 30px;
+			}
+			
+			.icon{
+			    position: absolute;
+			    top: 60px;
+			    transform: scale(1.3);
+			}
+			
+			.back-btn{
+			    left: 40px;
+			}
+			
+			.nav-btn{
+			    right: 40px;
+			}
+			
+			/* volume button */
+			
+			.volume-slider{
+			    -webkit-appearance: none;
+			    width: 100px;
+			    height: 40px;
+			    position: absolute;
+			    right: -35px;
+			    bottom: 80px;
+			    transform: rotate(-90deg);
+			    border-radius: 20px;
+			    background: var(--alpha-color);
+			    overflow: hidden;
+			    opacity: 0;
+			    display: none;
+			}
+			
+			.volume-slider.active{
+			    opacity: 1;
+			    display: block;
+			}
+			
+			.volume-slider::-webkit-slider-thumb{
+			    -webkit-appearance: none;
+			    height: 40px;
+			    width: 10px;
+			    background: var(--primary-color);
+			    box-shadow: -200px 0 1px 200px var(--primary-color);
+			}
+			
+			/* playlist section */
+			
+			.playlist{
+			    width: 100%;
+			    height: 100%;
+			    position: fixed;
+			    top: 0;
+			    right: -100%;
+			    padding: 30px 0;
+			    background: var(--background);
+			    z-index: 3;
+			    transition: 1s;
+			    overflow: auto;
+			}
+			
+			.playlist.active{
+			    right: 0;
+			}
+			
+			.title{
+			    font-weight: 300;
+			    font-size: 40px;
+			    text-align: center;
+			    margin-top: 15px;
+			    text-transform: capitalize;
+			    margin-bottom: 30px;
+			}
+			
+			.queue{
+			    width: 100%;
+			    height: 80px;
+			    padding: 0 30px;
+			    display: flex;
+			    align-items: center;
+			    border-top: 2px solid var(--alpha-color);
+			}
+			
+			.queue-cover{
+			    width: 60px;
+			    height: 60px;
+			    border-radius: 10px;
+			    overflow: hidden;
+			    margin-right: 20px;
+			    position: relative;
+			}
+			
+			.queue-cover img{
+			    width: 100%;
+			    height: 100%;
+			    object-fit: cover;
+			}
+			
+			.queue-cover i{
+			    position: absolute;
+			    top: 50%;
+			    left: 50%;
+			    transform: translate(-50%, -50%);
+			    font-size: 30px;
+			    color: var(--primary-color);
+			    display: none;
+			}
+			
+			.queue.active i{
+			    display: block;
+			}
+			
+			.queue .name{
+			    font-size: 22px;
+			    text-transform: capitalize;
+			}
+		</style>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+		<script src="https://kit.fontawesome.com/a062562745.js" crossorigin="anonymous"></script>
+
+	</head>
+	<body>
+		<audio src="" id="audio-source"></audio>
+		<!-- home section -->
+		<section class="home-section active">
+			<!-- carousel -->
+			<div class="carousel">
+				<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-1.jpg" class="active" alt="">
+				<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-5.jpg" alt="">
+				<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-6.jpg" alt="">
+				<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-7.jpg" alt="">
+				<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-10.jpg" alt="">
+			</div>
+			<h1 class="heading">最近播放</h1>
+			<div class="playlists-group">
+				<div class="playlist-card">
+					<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-2.png" class="playlist-card-img" alt="">
+					<p class="playlist-card-name">华语热歌</p>
+				</div>
+				<div class="playlist-card">
+					<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-3.jpg" class="playlist-card-img" alt="">
+					<p class="playlist-card-name">古风戏腔</p>
+				</div>
+				<div class="playlist-card">
+					<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-4.png" class="playlist-card-img" alt="">
+					<p class="playlist-card-name">深夜酒吧</p>
+				</div>
+				<div class="playlist-card">
+					<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-5.jpg" class="playlist-card-img" alt="">
+					<p class="playlist-card-name">失恋回忆</p>
+				</div>
+				<div class="playlist-card">
+					<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-6.jpg" class="playlist-card-img" alt="">
+					<p class="playlist-card-name">经典老歌</p>
+				</div>
+			</div>
+			<h1 class="heading">根据你的喜好</h1>
+			<div class="playlists-group">
+				<div class="playlist-card">
+					<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-7.jpg" class="playlist-card-img" alt="">
+					<p class="playlist-card-name">华语热歌</p>
+				</div>
+				<div class="playlist-card">
+					<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-8.jpg" class="playlist-card-img" alt="">
+					<p class="playlist-card-name">古风戏腔</p>
+				</div>
+				<div class="playlist-card">
+					<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-9.jpg" class="playlist-card-img" alt="">
+					<p class="playlist-card-name">深夜酒吧</p>
+				</div>
+				<div class="playlist-card">
+					<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-10.jpg" class="playlist-card-img" alt="">
+					<p class="playlist-card-name">失恋回忆</p>
+				</div>
+				<div class="playlist-card">
+					<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-1.jpg" class="playlist-card-img" alt="">
+					<p class="playlist-card-name">经典老歌</p>
+				</div>
+			</div>
+		</section>
+		<section class="music-player-section">
+			<img src="http://haiyong.site/wp-content/uploads/2021/09/back.png" class="back-btn icon hide" alt="">
+			<img src="http://haiyong.site/wp-content/uploads/2021/09/nav.png" class="nav-btn icon hide" alt="">
+			<h1 class="current-song-name">song 1</h1>
+			<p class="artist-name hide">artist 1</p>
+			<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-1.jpg" class="cover hide" alt="">
+			<div class="seek-bar-container">
+				<input type="range" class="music-seek-bar" value="0">
+				<p class="current-time hide">00 : 00</p>
+				<p class="duration hide">00 : 00</p>
+			</div>
+			<div class="controls">
+				<span class="fas fa-redo"></span>
+				<div class="main">
+					<i class="fas fa-backward active"></i>
+					<i class="fas fa-play active"></i>
+					<i class="fas fa-pause"></i>
+					<i class="fas fa-forward active"></i>
+				</div>
+				<input type="range" class="volume-slider" max="1" value="1" step="0.1">
+				<span class="fas fa-volume-up"></span>
+			</div>
+		</section>
+		<section class="playlist">
+			<img src="http://haiyong.site/wp-content/uploads/2021/09/back.png" class="back-btn icon" alt="">
+			<h1 class="title">playlist</h1>
+			<div class="queue active">
+				<div class="queue-cover">
+					<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-1.jpg" alt="">
+					<i class="fas fa-pause"></i>
+				</div>
+				<p class="name">song 1</p>
+			</div>
+			<div class="queue active">
+				<div class="queue-cover">
+					<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-2.png" alt="">
+					<i class="fas fa-pause"></i>
+				</div>
+				<p class="name">song 2</p>
+			</div>
+			<div class="queue active">
+				<div class="queue-cover">
+					<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-3.jpg" alt="">
+					<i class="fas fa-pause"></i>
+				</div>
+				<p class="name">song 3</p>
+			</div>
+			<div class="queue active">
+				<div class="queue-cover">
+					<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-4.png" alt="">
+					<i class="fas fa-pause"></i>
+				</div>
+				<p class="name">song 4</p>
+			</div>
+			<div class="queue active">
+				<div class="queue-cover">
+					<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-5.jpg" alt="">
+					<i class="fas fa-pause"></i>
+				</div>
+				<p class="name">song 5</p>
+			</div>
+			<div class="queue active">
+				<div class="queue-cover">
+					<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-6.jpg" alt="">
+					<i class="fas fa-pause"></i>
+				</div>
+				<p class="name">song 6</p>
+			</div>
+			<div class="queue active">
+				<div class="queue-cover">
+					<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-7.jpg" alt="">
+					<i class="fas fa-pause"></i>
+				</div>
+				<p class="name">song 7</p>
+			</div>
+			<div class="queue active">
+				<div class="queue-cover">
+					<img src="http://haiyong.site/wp-content/uploads/2021/09/cover-8.jpg" alt="">
+					<i class="fas fa-pause"></i>
+				</div>
+				<p class="name">song 8</p>
+			</div>
+		</section>
+		<script>
+			let songs = [
+			    {
+			        name: 'song 1',
+			        path: 'http://haiyong.site/wp-content/uploads/2021/09/Song-1.mp3',
+			        artist: 'artist 1',
+			        cover: 'http://haiyong.site/wp-content/uploads/2021/09/cover-1.jpg'
+			    },
+			    {
+			        name: 'song 2',
+			        path: 'http://haiyong.site/wp-content/uploads/2021/09/Song-2.mp3',
+			        artist: 'artist 2',
+			        cover: 'http://haiyong.site/wp-content/uploads/2021/09/cover-2.png'
+			    },
+			    {
+			        name: 'song 3',
+			        path: 'http://haiyong.site/wp-content/uploads/2021/09/Song-3.mp3',
+			        artist: 'artist 3',
+			        cover: 'http://haiyong.site/wp-content/uploads/2021/09/cover-3.png'
+			    },
+				{
+				    name: 'song 4',
+				    path: 'http://haiyong.site/wp-content/uploads/2021/09/Song-4.mp3',
+				    artist: 'artist 4',
+				    cover: 'http://haiyong.site/wp-content/uploads/2021/09/cover-4.png'
+				},
+				{
+				    name: 'song 5',
+				    path: 'http://haiyong.site/wp-content/uploads/2021/09/Song-5.mp3',
+				    artist: 'artist 5',
+				    cover: 'http://haiyong.site/wp-content/uploads/2021/09/cover-5.png'
+				},
+				{
+				    name: 'song 6',
+				    path: 'http://haiyong.site/wp-content/uploads/2021/09/Song-6.mp3',
+				    artist: 'artist 6',
+				    cover: 'http://haiyong.site/wp-content/uploads/2021/09/cover-6.png'
+				},
+				{
+				    name: 'song 7',
+				    path: 'http://haiyong.site/wp-content/uploads/2021/09/Song-7.mp3',
+				    artist: 'artist 7',
+				    cover: 'http://haiyong.site/wp-content/uploads/2021/09/cover-7.png'
+				},
+				{
+				    name: 'song 8',
+				    path: 'http://haiyong.site/wp-content/uploads/2021/09/Song-8.mp3',
+				    artist: 'artist 8',
+				    cover: 'http://haiyong.site/wp-content/uploads/2021/09/cover-8.png'
+				},
+			]
+		</script>
+		<script>
+			///// 旋转木马/////////////////
+			
+			const carousel = [...document.querySelectorAll('.carousel img')];
+			
+			let carouselImageIndex = 0;
+			
+			const changeCarousel = () => {
+			    carousel[carouselImageIndex].classList.toggle('active');
+			
+			    if(carouselImageIndex >= carousel.length - 1){
+			        carouselImageIndex = 0;
+			    } else{
+			        carouselImageIndex++;
+			    }
+			
+			    carousel[carouselImageIndex].classList.toggle('active');
+			}
+			
+			setInterval(() => {
+			    changeCarousel();
+			}, 3000);
+			
+			/////////////////////导航////////////
+			
+			////////////切换音乐播放器
+			
+			const musicPlayerSection = document.querySelector('.music-player-section');
+			
+			let clickCount = 1;
+			
+			musicPlayerSection.addEventListener('click', () => {
+			    if(clickCount >= 2){
+			        musicPlayerSection.classList.add('active');
+			        clickCount = 1;
+			        return;
+			    }
+			    clickCount++;
+			    setTimeout(() => {
+			        clickCount = 1;
+			    }, 250);
+			})
+			
+			/////// 从音乐播放器后退
+			
+			const backToHomeBtn = document.querySelector('.music-player-section .back-btn');
+			
+			backToHomeBtn.addEventListener('click', () => {
+			    musicPlayerSection.classList.remove('active');
+			})
+			
+			//////// access playlist
+			
+			const playlistSection = document.querySelector('.playlist');
+			const navBtn = document.querySelector('.music-player-section .nav-btn');
+			
+			navBtn.addEventListener('click', () => {
+			    playlistSection.classList.add('active');
+			})
+			
+			////////// 从播放列表返回到音乐播放器
+			
+			const backToMusicPlayer = document.querySelector('.playlist .back-btn');
+			
+			backToMusicPlayer.addEventListener('click', () => {
+			    playlistSection.classList.remove('active');
+			})
+			
+			//////navigation done ////////////////
+			
+			/////// music
+			
+			let currentMusic = 0;
+			
+			const music = document.querySelector('#audio-source');
+			
+			const seekBar = document.querySelector('.music-seek-bar');
+			const songName = document.querySelector('.current-song-name');
+			const artistName = document.querySelector('.artist-name');
+			const coverImage = document.querySelector('.cover');
+			const currentMusicTime = document.querySelector('.current-time');
+			const musicDuration = document.querySelector('.duration');
+			
+			const queue = [...document.querySelectorAll('.queue')];
+			
+			// select all buttons here
+			
+			const forwardBtn = document.querySelector('i.fa-forward');
+			const backwardBtn = document.querySelector('i.fa-backward');
+			const playBtn = document.querySelector('i.fa-play');
+			const pauseBtn = document.querySelector('i.fa-pause');
+			const repeatBtn = document.querySelector('span.fa-redo');
+			const volumeBtn = document.querySelector('span.fa-volume-up');
+			const volumeSlider = document.querySelector('.volume-slider');
+			
+			// funtion for setting up music
+			
+			const setMusic = (i) => {
+			    seekBar.value = 0;
+			    let song = songs[i];
+			    currentMusic = i;
+			
+			    music.src = song.path;
+			
+			    songName.innerHTML = song.name;
+			    artistName.innerHTML = song.artist;
+			    coverImage.src = song.cover;
+			
+			    setTimeout(() => {
+			        seekBar.max = music.duration;
+			        musicDuration.innerHTML = formatTime(music.duration);
+			    }, 300);
+			    currentMusicTime.innerHTML = '00 : 00';
+			    queue.forEach(item => item.classList.remove('active'));
+			    queue[currentMusic].classList.add('active');
+			}
+			
+			setMusic(0);
+			
+			// format duration in 00 : 00 format
+			
+			const formatTime = (time) => {
+			    let min = Math.floor(time / 60);
+			    if(min < 10){
+			        min = `0` + min;
+			    }
+			
+			    let sec = Math.floor(time % 60);
+			    if(sec < 10){
+			        sec = `0` + sec;
+			    }
+			
+			    return `${min} : ${sec}`;
+			}
+			
+			
+			// playBtn click event
+			
+			playBtn.addEventListener('click', () => {
+			    music.play();
+			    playBtn.classList.remove('active');
+			    pauseBtn.classList.add('active');
+			})
+			
+			
+			// pauseBtn click event
+			
+			pauseBtn.addEventListener('click', () => {
+			    music.pause();
+			    pauseBtn.classList.remove('active');
+			    playBtn.classList.add('active');
+			})
+			
+			//  forward btn
+			
+			forwardBtn.addEventListener('click', () => {
+			    if(currentMusic >= songs.length - 1){
+			        currentMusic = 0;
+			    } else{
+			        currentMusic++;
+			    }
+			    setMusic(currentMusic);
+			    playBtn.click();
+			})
+			
+			// backward btn
+			
+			backwardBtn.addEventListener('click', () => {
+			    if(currentMusic <= 0){
+			        currentMusic = songs.length - 1;
+			    } else{
+			        currentMusic--;
+			    }
+			    setMusic(currentMusic);
+			    playBtn.click();
+			})
+			
+			// seekbar events
+			
+			setInterval(() => {
+			    seekBar.value = music.currentTime;
+			    currentMusicTime.innerHTML = formatTime(music.currentTime);
+			    if(Math.floor(music.currentTime) == Math.floor(seekBar.max)){
+			        if(repeatBtn.className.includes('active')){
+			            setMusic(currentMusic);
+			            playBtn.click();
+			        } else{
+			            forwardBtn.click();
+			        }
+			    }
+			}, 500)
+			
+			seekBar.addEventListener('change', () => {
+			    music.currentTime = seekBar.value;
+			})
+			
+			// repeat button
+			
+			repeatBtn.addEventListener('click', () => {
+			    repeatBtn.classList.toggle('active');
+			})
+			
+			// volume section
+			
+			volumeBtn.addEventListener('click', () => {
+			    volumeBtn.classList.toggle('active');
+			    volumeSlider.classList.toggle('active');
+			})
+			
+			volumeSlider.addEventListener('input', () => {
+			    music.volume = volumeSlider.value;
+			})
+			
+			queue.forEach((item, i) => {
+			    item.addEventListener('click', () => {
+			        setMusic(i);
+			        playBtn.click();
+			    })
+			})
+		</script>
+	</body>
+</html>
+
+	
