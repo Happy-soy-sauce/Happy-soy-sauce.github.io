@@ -90,30 +90,9 @@ function fun_clock()
  var year = today.getFullYear();
  var month = today.getMonth()+1;
  var date = today.getDate();
-	<!-- 
  var hour = today.getHours();  //获得小时、分钟、秒
  var minute = today.getMinutes();
  var second = today.getSeconds();
-	-->
-
-
-<!--  api请求时间 -->
-$(document).ready(function() {
-            // 使用jQuery的ajax方法获取API数据
-            $.ajax({
-                url: "http://quan.suning.com/getSysTime.do",
-                dataType: "jsonp",
-                success: function(data) {
-                    // 获取API返回的时间报文
-                    var sysTime2 = data.sysTime2;
-                    var sysTime1 = data.sysTime1;
-
-		var year = sysTime2.substring(0, 4);
-                    var month = sysTime2.substring(5, 7);
-                    var day = sysTime2.substring(8, 10);
-                    var hour = sysTime2.substring(11, 13);
-                    var minute = sysTime2.substring(14, 16);
-                    var second = sysTime2.substring(17, 19);
 
 
 			
