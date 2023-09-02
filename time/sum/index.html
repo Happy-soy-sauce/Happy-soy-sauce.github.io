@@ -85,25 +85,23 @@
   }
 
   function fun_clock() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://quan.suning.com/getSysTime.do", true);
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var response = JSON.parse(xhr.responseText);
-        var date = new Date(response.sysTime2);
-        var year = date.getFullYear();
-        var month = date.getMonth() + 1;
-        var day = date.getDate();
-        var hour = date.getHours();
-        var minute = date.getMinutes();
-        var second = date.getSeconds();
+    fetch("http://quan.suning.com/getSysTime.do")
+      .then(response => response.json())
+      .then(data => {
+        var sysTime = data.sysTime2;
+        var year = sysTime.substring(0, 4);
+        var month = sysTime.substring(5, 7);
+        var date = sysTime.substring(8, 10);
+        var hour = sysTime.substring(11, 13);
+        var minute = sysTime.substring(14, 16);
+        var second = sysTime.substring(17, 19);
         var apm = "AM";
         if (hour > 12) {
           hour = hour - 12;
           apm = "PM";
         }
         var weekday = "";
-        switch (date.getDay()) {
+        switch (new Date(sysTime).getDay()) {
           case 0:
             weekday = "星期日";
             break;
@@ -129,9 +127,9 @@
         document.getElementById("myclock").innerHTML =
           year +
           "年" +
-          dateFilter(month) +
+          month +
           "月" +
-          dateFilter(day) +
+          date +
           "日 " +
           dateFilter(hour) +
           ":" +
@@ -142,9 +140,7 @@
           apm +
           " " +
           weekday;
-      }
-    };
-    xhr.send();
+      });
   }
 
   fun_clock();
