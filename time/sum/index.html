@@ -77,62 +77,77 @@
 
 
 <script type="text/javascript">
-//值小于10时，在前面补0
-function dateFilter(date){
-	    if(date < 10){return "0"+date;}
-	    return date;
-}
+  function dateFilter(date) {
+    if (date < 10) {
+      return "0" + date;
+    }
+    return date;
+  }
 
-function fun_clock()
-{
- var today = new Date();
+  function fun_clock() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://quan.suning.com/getSysTime.do", true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        var response = JSON.parse(xhr.responseText);
+        var date = new Date(response.sysTime2);
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var hour = date.getHours();
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        var apm = "AM";
+        if (hour > 12) {
+          hour = hour - 12;
+          apm = "PM";
+        }
+        var weekday = "";
+        switch (date.getDay()) {
+          case 0:
+            weekday = "星期日";
+            break;
+          case 1:
+            weekday = "星期一";
+            break;
+          case 2:
+            weekday = "星期二";
+            break;
+          case 3:
+            weekday = "星期三";
+            break;
+          case 4:
+            weekday = "星期四";
+            break;
+          case 5:
+            weekday = "星期五";
+            break;
+          case 6:
+            weekday = "星期六";
+            break;
+        }
+        document.getElementById("myclock").innerHTML =
+          year +
+          "年" +
+          dateFilter(month) +
+          "月" +
+          dateFilter(day) +
+          "日 " +
+          dateFilter(hour) +
+          ":" +
+          dateFilter(minute) +
+          ":" +
+          dateFilter(second) +
+          " " +
+          apm +
+          " " +
+          weekday;
+      }
+    };
+    xhr.send();
+  }
 
- var year = today.getFullYear();
- var month = today.getMonth()+1;
- var date = today.getDate();
- var hour = today.getHours();  //获得小时、分钟、秒
- var minute = today.getMinutes();
- var second = today.getSeconds();
-
-
-			
-		
- var apm="AM"; //显示上午: AM
- if (hour>12) //按12小时制显示  在前端页面用html做一个简单的时间显示（12小时制）
- {
-    hour=hour-12;
-    apm="PM"  ;
- }
- var weekday = 0;
- switch(today.getDay()){
-    case 0:
-      weekday = "星期日";
-    break;
-    case 1:
-      weekday = "星期一";
-    break;
-    case 2:
-      weekday = "星期二";
-    break;
-    case 3:
-      weekday = "星期三";
-    break;
-    case 4:
-      weekday = "星期四";
-    break;
-    case 5:
-      weekday = "星期五";
-    break;
-    case 6:
-      weekday = "星期六";
-    break;
- }
-
-  /*设置当前时间*/
- document.getElementById("myclock").innerHTML= year+"年"+month+"月"+date+"日 "+dateFilter(hour)+":"+dateFilter(minute)+":"+dateFilter(second)+" "+apm+" "+weekday;
-}
-/*设置调用间隔*/
-var myTime = setInterval("fun_clock()",1000);
+  fun_clock();
 </script>
 	<a href="/">返回主页</a>
 </div>
