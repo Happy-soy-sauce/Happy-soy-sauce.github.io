@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="Happy-soy-sauce.github.io">
+<head>
+    <title>作息时间表(夏)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link rel="stylesheet" href="./LifeTable.css" />
+</head>
+
+<style>
+@font-face{
+  font-family: 'ys';
+  src: url(https://fs-im-kefu.7moor-fs1.com/29397395/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/1693381858156/汉仪文黑-85W.ttf);<!--(up.ly93.cc)提供寄存-->
+}
+</style>
+
+<body>
+<div style="font-family: ys">
+
+    <div id="d1">
+        <!--  <p id="p1">作息时间表</p>  -->
+        <img id="left_img"src="./cover-20.jpg" alt="图片加载失败" />
+
+
+
+    </div>
+    <div id="d2">
+        <p id="p1">上午</p>
+        <!--<p><img id="img_hx"  src="Image/Life/henxian.png" /></p>-->
+        <hr />
+        <br />
+        <p>	早&emsp;读&emsp;7:30～7:55	</p>
+        <p>	第一节&emsp;8:00～8:45	</p>
+        <p>	第二节&emsp;8:55～9:40	</p>
+        <p>	体&emsp;锻&emsp;9:40～10:10	</p>
+        <p>	第三节&emsp;10:10～10:55	</p>
+        <p>	眼&emsp;操&emsp;11:05～11:10	</p>
+        <p>	第四节&emsp;11:10～12:10	</p>
+
+    </div>
+    <div id="d3">
+        <p id="p1">下午</p>
+        <!--<p><img id="img_hx"  src="Image/Life/henxian.png" /></p>-->
+        <hr />
+        <br />
+        <p>	预&emsp;备	&emsp;	1:55	</p>
+        <p>	第五节	&emsp;	2:00～2:45	</p>
+        <p>	第六节	&emsp;	2:55～3:40	</p>
+        <p>	眼&emsp;操	&emsp;	3:50～3:55	</p>
+        <p>	第七节	&emsp;	3:55～4:40	</p>
+        <p>	第八节	&emsp;	4:50～5:25	</p>
+
+    </div>
+    <div id="d4">
+        <p id="p1">晚上</p>
+        <!--<p><img id="img_hx"  src="Image/Life/henxian.png" /></p>-->
+        <hr />
+        <br />
+        <p>	晚&emsp;&emsp;&emsp;&emsp;读	&emsp;	6:30～6:50	</p>
+        <p>	晚自习第一场	&emsp;	6:50～8:00	</p>
+        <p>	晚自习第二场	&emsp;	8:10～10:00	</p>
+        <p id="p1">系统时间</p>
+        <p id="p1145">系统时间未校正时本时钟即不准确</p>
+    </div>
+
+
+
+<body>
+
+<div id="myclock"></div>
+</body>
+</html>
+
+
+<script type="text/javascript">
+//值小于10时，在前面补0
+function dateFilter(date){
+	    if(date < 10){return "0"+date;}
+	    return date;
+}
+
+function fun_clock()
+{
+ var today = new Date();
+
+ var year = today.getFullYear();
+ var month = today.getMonth()+1;
+ var date = today.getDate();
+ var hour = today.getHours();  //获得小时、分钟、秒
+ var minute = today.getMinutes();
+ var second = today.getSeconds();
+
+ var apm="AM"; //显示上午: AM
+ if (hour>12) //按12小时制显示  在前端页面用html做一个简单的时间显示（12小时制）
+ {
+    hour=hour-12;
+    apm="PM"  ;
+ }
+ var weekday = 0;
+ switch(today.getDay()){
+    case 0:
+      weekday = "星期日";
+    break;
+    case 1:
+      weekday = "星期一";
+    break;
+    case 2:
+      weekday = "星期二";
+    break;
+    case 3:
+      weekday = "星期三";
+    break;
+    case 4:
+      weekday = "星期四";
+    break;
+    case 5:
+      weekday = "星期五";
+    break;
+    case 6:
+      weekday = "星期六";
+    break;
+ }
+
+  /*设置当前时间*/
+ document.getElementById("myclock").innerHTML= year+"年"+month+"月"+date+"日 "+dateFilter(hour)+":"+dateFilter(minute)+":"+dateFilter(second)+" "+apm+" "+weekday;
+}
+/*设置调用间隔*/
+var myTime = setInterval("fun_clock()",1000);
+</script>
+</div>
+</body>
+</html>
