@@ -77,44 +77,49 @@
 
 
 <head>
-<style>
-   #myclock {
-       color: white; /* 设置字体颜色为白色 */
-   }
-</style>
-</head>
-  <script>
-    // 存储初始化的时间
-    var initialTime;
-
-    // 获取API的时间，并将其存储为初始时间
-    function getInitialTime() {
-      var url = "http://quan.suning.com/getSysTime.do";
-      var xmlHttp = new XMLHttpRequest();
-      xmlHttp.open("GET", url, true);
-      xmlHttp.send();
-      xmlHttp.addEventListener('load', function() {
-        if (this.status === 200) {
-          var response = JSON.parse(this.responseText);
-          initialTime = response.sysTime1;
-        }
-      });
-    }
-
-    // 每秒更新一次时间
-    function updateTime() {
-      var now = new Date();
-      var timeStr = initialTime.substr(0, initialTime.indexOf(' ')) + ' ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
-      document.getElementById('currentTime').innerHTML = timeStr;
-    }
-  </script>
-</head>
-<body onload="getInitialTime()">
-  <h1 id="currentTime"></h1>
-  <script>
-    // 每秒更新一次时间
-    setInterval(updateTime, 1000);
-  </script>
+ <style>  
+    #myclock {  
+      color: white; /* 设置字体颜色为白色 */  
+    }  
+  </style>  
+</head>  
+<body onload="getInitialTime()">  
+  <h1 id="currentTime"></h1>  
+  <hr></hr>  
+        <br></br>  
+        <p>晚&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;读&nbsp;&nbsp;6:30～6:50</p>  
+        <p>晚自习第一场&nbsp;&nbsp;6:50～8:00</p>  
+        <p>晚自习第二场&nbsp;&nbsp;8:10～10:00</p>  
+        <p id="p_system_time">系统时间</p>  
+        <p id="warning">系统时间未校正时本时钟即不准确</p>  
+  <a href="/">返回主页</a>  
+  <script>  
+    // 存储初始化的时间  
+    var initialTime;  
+    var now;  
+    var timeStr;  
+  
+    // 获取API的时间，并将其存储为初始时间  
+    function getInitialTime() {  
+      var url = "http://quan.suning.com/getSysTime.do";  
+      var xmlHttp = new XMLHttpRequest();  
+      xmlHttp.open("GET", url, true);  
+      xmlHttp.send();  
+      xmlHttp.addEventListener('load', function() {  
+        if (this.status === 200) {  
+          var response = JSON.parse(this.responseText);  
+          initialTime = response.sysTime1;  
+        }  
+      });  
+    }  
+  
+    // 每秒更新一次时间  
+    function updateTime() {  
+      now = new Date();  
+      timeStr = initialTime.substr(0, initialTime.indexOf(' ')) + ' ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();  
+      document.getElementById('currentTime').innerHTML = timeStr;  
+    }  
+  </script>  
 </body>
 </div>
 	
