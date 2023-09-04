@@ -86,42 +86,41 @@
 <body>
    <div id="myclock"></div>
 
-<script>  
-    // 存储初始化的时间  
-    var initialTime;  
-  
-    // 获取API的时间，并将其存储为初始时间  
-    function getInitialTime() {  
-      var url = "http://quan.suning.com/getSysTime.do";  
-      var xmlHttp = new XMLHttpRequest();  
-      xmlHttp.open("GET", url, true);  
-      xmlHttp.send();  
-      xmlHttp.addEventListener('load', function() {  
-        if (this.status === 200) {  
-          var response = JSON.parse(this.responseText);  
-          initialTime = response.sysTime1;  
-        }  
-      });  
-    }  
-  
-    // 每秒更新一次时间  
-    function updateTime() {  
-      var now = new Date();  
-      var timeStr = initialTime.substr(0, initialTime.indexOf(' ')) + ' ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();  
-      document.getElementById('currentTime').innerHTML = timeStr;  
-    }  
-  </script>  
-</head>  
-<body onload="getInitialTime()">  
-  <h1 id="currentTime"></h1>  
-  <script>  
-    // 每秒更新一次时间  
-    setInterval(updateTime, 1000);  
-  </script>  
+<script>
+    // 存储初始化的时间
+    var initialTime;
+
+    // 获取API的时间，并将其存储为初始时间
+    function getInitialTime() {
+      var url = "http://quan.suning.com/getSysTime.do";
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", url, true);
+      xmlHttp.send();
+      xmlHttp.addEventListener('load', function() {
+        if (this.status === 200) {
+          var response = JSON.parse(this.responseText);
+          initialTime = response.sysTime1;
+        }
+      });
+    }
+
+    // 每秒更新一次时间
+    function updateTime() {
+      var now = new Date();
+      var timeStr = initialTime.substr(0, initialTime.indexOf(' ')) + ' ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+      document.getElementById('currentTime').innerHTML = timeStr;
+    }
+  </script>
+</head>
+<body onload="getInitialTime()">
+  <h1 id="currentTime"></h1>
+  <script>
+    // 每秒更新一次时间
+    setInterval(updateTime, 1000);
+  </script>
 </body>
 </div>
 	
 </div>
 </body>
 </html>
-
