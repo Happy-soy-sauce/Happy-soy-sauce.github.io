@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Directory Jump Example</title>
+    <script>
+        // 获取当前日期
+        var date = new Date();
+
+        // 获取当前星期的数字（0-6）
+        var day = date.getDay();
+
+        // 根据当前星期选择要跳转的目录
+        var directory;
+        switch (day) {
+            case 0:
+                directory = './1';
+                break;
+            case 1:
+                directory = './2';
+                break;
+            case 2:
+                directory = './3';
+                break;
+            case 3:
+                directory = './4';
+                break;
+            case 4:
+                directory = './5';
+                break;
+            case 5:
+                directory = './6';
+                break;
+            case 6:
+                directory = './7';
+                break;
+            default:
+                directory = './default'; // 如果当前不是星期一到星期日，跳转到默认目录
+        }
+
+        // 假设我们有一个函数可以跳转到指定的目录
+        function jumpToDirectory(directory) {
+            // 在这里实现跳转的逻辑，例如改变当前的工作目录或者导航到一个特定的网页
+            // 这取决于你的具体需求和环境
+            console.log("Jumping to directory:", directory); // 仅在浏览器控制台输出目录信息，实际使用时请移除这行代码
+        }
+
+        // 跳转到指定目录
+        jumpToDirectory(directory);
+    </script>
+</head>
+<body>
+    <!-- 其他页面内容 -->
+</body>
+</html>
