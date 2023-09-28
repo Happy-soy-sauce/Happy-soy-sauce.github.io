@@ -70,9 +70,9 @@
         <p>	晚自习第一场	&emsp;	6:50～8:00	</p>
         <p>	晚自习第二场	&emsp;	8:10～10:00	</p>
         <p id="p1">系统时间</p>
-        <p id="p1145">系统时间未校正时本时钟即不准确</p>
+        <p id="p1145"></p>
     </div>
-<a href="/">返回主页</a>
+
 
 
 
@@ -134,14 +134,14 @@
               break;
            }
 
-           document.getElementById("myclock").innerHTML= year+"年"+month+"月"+date+"日 "+dateFilter(hour)+":"+dateFilter(minute)+":"+dateFilter(second)+" "+apm+" "+weekday;
+           document.getElementById("myclock").innerHTML= "系统时间"year+"年"+month+"月"+date+"日 "+dateFilter(hour)+":"+dateFilter(minute)+":"+dateFilter(second)+" "+apm+" "+weekday;
        }
 
        var myTime = setInterval(fun_clock, 1000);
    </script>
 </body>
 </div>
-	
+	<a href="/">返回主页</a>
 </div>
 </body>
 </html>
