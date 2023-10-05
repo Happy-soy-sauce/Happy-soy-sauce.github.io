@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>显示随机图片</title>
+</head>
+<body>
+    <img id="randomImage" src="" alt="随机图片">
+
+    <script>
+        function getRandomImage() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '1w.json', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    var randomIndex = Math.floor(Math.random() * response.data.length);
+                    var imageUrl = response.data[randomIndex].urls.original;
+                    document.getElementById('randomImage').src = imageUrl;
+                }
+            };
+            xhr.send();
+        }
+
+        getRandomImage();
+    </script>
+</body>
+</html>
