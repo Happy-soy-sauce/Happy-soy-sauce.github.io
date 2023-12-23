@@ -1,0 +1,557 @@
+.serial-debug-input-wrapper {
+  position: relative;
+}
+.serial-debug-input-wrapper-has-suffix .serial-debug-input {
+  padding-right: 40px;
+}
+.serial-debug-input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 36px;
+  padding: 8px 10px;
+  font-size: 14px;
+  color: #333;
+  background: #fafafa;
+  border: none;
+  border-radius: 5px;
+}
+.serial-debug-input::-webkit-input-placeholder {
+  color: #a9a9a9;
+}
+.serial-debug-input::placeholder {
+  color: #a9a9a9;
+}
+.serial-debug-input-suffix {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+.serial-debug-mobile .serial-debug-input {
+  height: 2.571428em;
+  padding: 0.571428em 0.714285em;
+  border-radius: 0.357142em;
+  font-size: 1em;
+}
+.serial-debug-mobile .serial-debug-input-suffix {
+  font-size: 0.857142em;
+  margin-right: 0.571428em;
+}
+.serial-debug-mobile .serial-debug-input-wrapper-has-suffix .serial-debug-input {
+  padding-right: 2.857142em;
+}
+
+.serial-debug-select {
+  position: relative;
+}
+.serial-debug-select-input {
+  position: relative;
+  box-sizing: border-box;
+  display: block;
+  min-height: 37px;
+  padding: 8px 40px 8px 10px;
+  color: #333;
+  cursor: pointer;
+  background: #fafafa;
+  border-radius: 5px;
+}
+.serial-debug-select-input::after {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  font-size: 12px;
+  color: #888;
+  content: '选择';
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+.serial-debug-select-panel {
+  position: absolute;
+  top: calc(100% + 3px);
+  z-index: 100;
+  width: 100%;
+  padding: 5px 0;
+  margin: 0;
+  visibility: hidden;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
+  -webkit-transition: -webkit-transform 0.1s;
+  transition: -webkit-transform 0.1s;
+  transition: transform 0.1s;
+  transition: transform 0.1s, -webkit-transform 0.1s;
+  -webkit-transform: scaleY(0);
+          transform: scaleY(0);
+  -webkit-transform-origin: 50% 0%;
+          transform-origin: 50% 0%;
+}
+.serial-debug-select-panel .serial-debug-select-item {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  padding: 8px 10px;
+  color: #333;
+  list-style: none;
+  cursor: pointer;
+  -webkit-transition: all 0.1s;
+  transition: all 0.1s;
+}
+.serial-debug-select-panel .serial-debug-select-item span {
+  color: #aaa;
+}
+.serial-debug-select-panel .serial-debug-select-item:hover {
+  background-color: #fafafa;
+}
+.serial-debug-select-panel .serial-debug-select-item--active {
+  color: #ff5f00;
+  background-color: #fafafa;
+}
+.serial-debug-select-panel-empty {
+  padding: 30px 10px;
+  color: #aaa;
+  text-align: center;
+}
+.serial-debug-select-placeholder .serial-debug-select-input {
+  color: #a9a9a9;
+}
+.serial-debug-select-delete {
+  font-size: 12px;
+}
+.serial-debug-select--open .serial-debug-select-panel {
+  visibility: visible;
+  -webkit-transform: scaleY(1);
+          transform: scaleY(1);
+}
+.serial-debug-mobile .serial-debug-select-input {
+  padding: 0.571428em 2.857142em 0.571428em 0.714285em;
+  border-radius: 0.357142em;
+  min-height: 2.642857em;
+}
+.serial-debug-mobile .serial-debug-select-input::after {
+  font-size: 0.857142em;
+  right: 0.714285em;
+}
+.serial-debug-mobile .serial-debug-select-panel {
+  top: calc(100% +  0.214285em );
+  padding: 0.357142em 0;
+  border-radius: 0.357142em;
+  box-shadow: 0 0.071428em 0.357142em 0 rgba(0,0,0,0.1);
+}
+.serial-debug-mobile .serial-debug-select-panel .serial-debug-select-item {
+  padding: 0.571428em 0.714285em;
+}
+.serial-debug-mobile .serial-debug-select-delete {
+  font-size: 0.857142em;
+}
+
+.serial-debug-switch {
+  position: relative;
+  box-sizing: border-box;
+  display: block;
+  width: 56px;
+  height: 22px;
+  padding: 2px 10px;
+  font-size: 12px;
+  color: #888;
+  text-align: right;
+  cursor: pointer;
+  background: #eee;
+  border-radius: 25px;
+  -webkit-transition: background 0.3s;
+  transition: background 0.3s;
+}
+.serial-debug-switch::before {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  display: block;
+  width: 18px;
+  height: 18px;
+  content: '';
+  background: #fff;
+  border-radius: 50%;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+.serial-debug-switch--open {
+  color: #fff;
+  text-align: left;
+  background: #ff5f00;
+}
+.serial-debug-switch--open::before {
+  -webkit-transform: translateX(34px);
+          transform: translateX(34px);
+}
+.serial-debug-mobile .serial-debug-switch {
+  width: 4.666666em;
+  font-size: 0.857142em;
+  height: 1.833333em;
+  border-radius: 2.083333em;
+  padding: 0.166666em 0.833333em;
+  line-height: 1.583333em;
+}
+.serial-debug-mobile .serial-debug-switch::before {
+  width: 1.5em;
+  height: 1.5em;
+  left: 0.166666em;
+  top: 0.166666em;
+}
+.serial-debug-mobile .serial-debug-switch--open::before {
+  -webkit-transform: translateX( 2.833333em );
+          transform: translateX( 2.833333em );
+}
+
+.serial-debug-cover-btn {
+  position: fixed;
+  right: 100px;
+  bottom: 160px;
+  z-index: 10000;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  width: 50px;
+  height: 50px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 2px;
+  cursor: pointer;
+  background: #ff5f00;
+  border-radius: 50%;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
+}
+.serial-debug-input-wrapper {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+}
+.serial-debug-input-suffix {
+  font-size: 12px;
+  color: #888;
+  cursor: pointer;
+}
+.serial-debug-section {
+  margin-bottom: 5px;
+}
+.serial-debug-bar {
+  box-sizing: border-box;
+  padding: 20px 22px 0;
+}
+.serial-debug-bar-close {
+  display: none;
+}
+.serial-debug-tabbar {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  font-family: serif;
+  border-bottom: 1px solid #f1f1f1;
+}
+.serial-debug-tabbar span {
+  position: relative;
+  box-sizing: border-box;
+  display: block;
+  width: 70px;
+  padding: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+.serial-debug-tabbar span.serial-debug-tab-active {
+  font-weight: 600;
+}
+.serial-debug-tabbar span.serial-debug-tab-active::before {
+  position: absolute;
+  bottom: 0;
+  left: 8px;
+  z-index: -1;
+  width: 53px;
+  height: 4px;
+  content: '';
+  background: #ff5f00;
+  opacity: 0.8;
+}
+.serial-debug-panel {
+  position: fixed;
+  z-index: 20000;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+  -webkit-transition: -webkit-transform 0.2s;
+  transition: -webkit-transform 0.2s;
+  transition: transform 0.2s;
+  transition: transform 0.2s, -webkit-transform 0.2s;
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  -webkit-transform-origin: 100% 100%;
+          transform-origin: 100% 100%;
+}
+.serial-debug-panel-visible {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.serial-debug-panel-wrapper {
+  box-sizing: border-box;
+  width: 380px;
+  height: 500px;
+  padding: 0 28px 30px;
+  overflow: scroll;
+}
+.serial-debug-item {
+  margin: 20px 0;
+}
+.serial-debug-item h3 {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+.serial-debug-item-env .serial-debug-section,
+.serial-debug-item-fake .serial-debug-section {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.serial-debug-item-env .serial-debug-section-wrapper,
+.serial-debug-item-fake .serial-debug-section-wrapper {
+  position: relative;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+}
+.serial-debug-item-env .serial-debug-section-wrapper .serial-debug-input,
+.serial-debug-item-fake .serial-debug-section-wrapper .serial-debug-input {
+  width: 100%;
+}
+.serial-debug-item-env .serial-debug-section .serial-debug-switch,
+.serial-debug-item-fake .serial-debug-section .serial-debug-switch {
+  margin-right: 60px;
+}
+.serial-debug-tip {
+  position: absolute;
+  top: 39px;
+  left: 0;
+  font-size: 12px;
+  color: #ff5f00;
+}
+.serial-debug-msg {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.serial-debug-msg label {
+  display: block;
+  width: 120px;
+  font-weight: 300;
+}
+.serial-debug-btn {
+  padding: 5px 10px;
+  color: #ff5f00;
+  cursor: pointer;
+  background: #fff0e9;
+  border-radius: 5px;
+}
+.serial-debug-btn--loading {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+.serial-debug-pipe .serial-debug-msg {
+  margin: 10px 0;
+}
+.serial-debug-pipe .serial-debug-msg .serial-debug-select,
+.serial-debug-pipe .serial-debug-msg .serial-debug-input {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+}
+.serial-debug-pipe-result {
+  margin-top: 10px;
+}
+.serial-debug-pipe-result h6 {
+  display: block;
+  margin: 10px 0;
+  font-weight: 500;
+}
+.serial-debug-pipe-result .serial-debug-msg {
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+          align-items: flex-start;
+  margin-bottom: 10px;
+}
+.serial-debug-pipe-result-data {
+  height: 120px;
+  padding: 10px;
+  overflow: scroll;
+  background: #fafafa;
+  border-radius: 8px;
+}
+.serial-debug-pipe-result-data span {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+}
+.serial-debug-vconsole {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.serial-debug-vconsole .serial-debug-switch {
+  margin-right: 65px;
+}
+.serial-debug .serial-debug-btn-sign {
+  position: relative;
+  left: 100%;
+  display: inline-block;
+  margin-top: 10px;
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+}
+.vc-switch {
+  display: none !important;
+}
+
+.serial-debug-mobile {
+  z-index: 100;
+}
+.serial-debug-mobile .serial-debug-bar {
+  position: absolute;
+  left: 0;
+  z-index: 100002;
+  box-sizing: border-box;
+  width: 100%;
+  background: #fff;
+  right: 1.428571em;
+  padding: 0.714285em 1.428571em 0 0.714285em;
+}
+.serial-debug-mobile .serial-debug-bar-close {
+  box-sizing: border-box;
+  display: block;
+  color: #888;
+  text-align: right;
+  cursor: pointer;
+  margin-bottom: 0.714285em;
+}
+.serial-debug-mobile .serial-debug-cover-btn {
+  width: 3.571428em;
+  height: 3.571428em;
+  font-size: 0.857142em;
+  right: 3.571428em;
+  bottom: 7.142857em;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
+}
+.serial-debug-mobile .serial-debug-tabbar span {
+  width: 5em;
+  padding: 0.357142em;
+}
+.serial-debug-mobile .serial-debug-tabbar span.serial-debug-tab-active {
+  border-width: 0.214285em;
+}
+.serial-debug-mobile .serial-debug-tabbar span.serial-debug-tab-active::before {
+  width: 3.785714em;
+  height: 0.285714em;
+  left: 0.571428em;
+}
+.serial-debug-mobile .serial-debug-panel {
+  position: fixed;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  -webkit-transition: -webkit-transform 0.1s;
+  transition: -webkit-transform 0.1s;
+  transition: transform 0.1s;
+  transition: transform 0.1s, -webkit-transform 0.1s;
+  -webkit-transform: translate(0);
+          transform: translate(0);
+}
+.serial-debug-mobile .serial-debug-panel-visible {
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+}
+.serial-debug-mobile .serial-debug-panel-wrapper {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100vh;
+  overflow: scroll;
+  padding: 6.428571em 1.428571em 8.571428em 1.428571em;
+}
+.serial-debug-mobile .serial-debug-item {
+  margin: 0;
+}
+.serial-debug-mobile .serial-debug-item h3 {
+  margin: 0;
+  padding: 1.428571em 0 0.714285em 0;
+  border-width: 0.071428em;
+  font-size: 1em;
+}
+.serial-debug-mobile .serial-debug-item:first-of-type h3 {
+  padding-top: 0;
+}
+.serial-debug-mobile .serial-debug-item-env .serial-debug-switch,
+.serial-debug-mobile .serial-debug-item-fake .serial-debug-switch {
+  margin-right: 5em;
+}
+.serial-debug-mobile .serial-debug-tip {
+  top: 3.25em;
+  font-size: 0.857142em;
+}
+.serial-debug-mobile .serial-debug-msg label {
+  width: 8.571428em;
+}
+.serial-debug-mobile .serial-debug-btn {
+  padding: 0.357142em 0.714285em;
+  border-radius: 0.357142em;
+  margin-right: 0.857142em;
+}
+.serial-debug-mobile .serial-debug-pipe .serial-debug-msg {
+  margin: 0.714285em 0;
+}
+.serial-debug-mobile .serial-debug-pipe .serial-debug-msg span {
+  margin-right: 0;
+}
+.serial-debug-mobile .serial-debug-pipe .serial-debug-msg .serial-debug-switch {
+  width: 4.666666em;
+}
+.serial-debug-mobile .serial-debug-pipe .serial-debug-msg .serial-debug-btn {
+  margin-top: 0.714285em;
+}
+.serial-debug-mobile .serial-debug-pipe-result {
+  overflow: auto;
+  margin-top: 0.714285em;
+}
+.serial-debug-mobile .serial-debug-pipe-result h6 {
+  font-size: 1em;
+  margin-bottom: 0.714285em;
+}
+.serial-debug-mobile .serial-debug-pipe-result-data {
+  height: 14.285714em;
+  border-radius: 0.571428em;
+  padding: 0.714285em;
+}
+.serial-debug-mobile .serial-debug-pipe-result .serial-debug-msg {
+  margin-bottom: 0.714285em;
+}
+.serial-debug-mobile .serial-debug-vconsole .serial-debug-switch {
+  margin-right: 5em;
+}
+.serial-debug-mobile-vconsole .serial-debug-switch {
+  margin-right: 5em;
+}
+
