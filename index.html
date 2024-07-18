@@ -1,53 +1,88 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <link href="./css/style.css" rel="stylesheet" />
-    <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
-    <title>Happysoysauce's web</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自适应背景图片与毛玻璃容器</title>
     <style>
-    @font-face{
-        font-family: 'ys';
-        src: url(https://fs-im-kefu.7moor-fs1.com/29397395/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/1706616199793/MINECRAFT.TTF);<!--(up.ly93.cc)提供寄存(MC字体)-->
+        /* 设置整个页面的背景 */
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-image: url('./img/wp.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* 居中显示页面内容 */
+        }
+
+        /* 毛玻璃效果容器样式 */
+        .frosted-glass-container {
+            background: rgba(255, 255, 255, 0.3); /* 半透明背景 */
+            backdrop-filter: blur(8px); /* 毛玻璃效果 */
+            border-radius: 16px; /* 圆角 */
+            padding: 20px; /* 内边距 */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+            max-width: 500px; /* 最大宽度，可根据需要调整 */
+            width: 300; /* 宽度为父元素的90%，确保在较小屏幕上也能良好显示 */
+            text-align: center; /* 文本居中 */
+            margin: auto; /* 水平和垂直居中 */
+            position: relative; /* 如果需要添加子元素并定位它们 */
+        }
+    .border-link {
+        display: inline-block; /* 允许设置边距 */
+        text-decoration: none; /* 移除下划线 */
+        color: #000; /* 初始文字颜色 */
+        background-color: transparent; /* 初始背景色透明 */
+        border: 2px dashed #98F5FF; /* 蓝色虚线边框 */
+        border-radius: 5px;
+        padding: 5px 10px;
+        font-size: 14px;
+        cursor: pointer; /* 鼠标悬停时显示手指形状，表明可点击 */
+        margin-right: 10px; /* 在每个链接的右侧添加间距 */
+        margin-top: 0px; /* 上边距 */
+        margin-bottom: 10px; /* 下边距 */
+    }
+
+    /* 可选：为最后一个链接移除右侧间距，但在这个例子中，它不会影响布局 */
+     .border-link:last-of-type {
+        margin-right: 0;
+    }
+
+    .border-link:hover {
+        background-color: #98F5FF; /* 鼠标悬停时背景色 */
+        color: #fff; /* 鼠标悬停时文字颜色 */
     }
     </style>
 </head>
 <body>
-<div style="font-family:ys">
-    <div id="nescss">
-      <header :class="{ sticky: scrollPos > 50 }">
-        <div class="container">
-          <div class="nav-brand">
-            <a>
-              <h1><i class="snes-jp-logo brand-logo"></i>Happysoysauce的网站</h1>
-            </a>
-            <p>欢迎来到 happysoysauce 的网站</p>
-          </div>
 
-          <div class="social-buttons">
-            <div class="share">
-                <a>&#8195;</a>
-                <a href="https://github.com/happy-soy-sauce/"><img src="data:image/png;base64,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" width="40" height="40"></a>
-                <a href="http://wpa.qq.com/msgrd?v=3&uin=1551153528&site=qq&menu=yes"><img src="data:image/png;base64,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" width="45" height="45"></a>
-            </div>
-          </div>
-        </div>
-      </header>
+<!-- 毛玻璃效果容器 -->
+<div class="frosted-glass-container">
+    <!-- 页面内容 -->
+    <h1>Happysoysauce’s web</h1>
+    <p style="color: #00BFFF;">--------------------[about]--------------------</p>
+    <p>我只是一个小小的高中生罢了</p>
+    <p style="color: #00BFFF;">--------------------[快速连接]--------------------</p>
+    <p style="color: #8DB6CD" >][常用链接][</p>
+    <section>
+    <a href="space.bilibili.com/2068070700" class="border-link" role="button">我的b站</a>
+    <a href="www.midishow.com" class="border-link" role="button">midi检索</a>
+    <a href="slchzh3473.github.io/sim-phi/" class="border-link" role="button">phi模拟器</a>
+    <a href="https://github.com/Happy-soy-sauce" class="border-link" role="button">我的github</a>
+    <a href="https://littleskin.cn/" class="border-link" role="button">mc皮肤站</a>
+    </section>
+    <section>
+    <a href="404" class="border-link" role="button">下载站</a>
+    </section>
 
 
-       <div class="container">
-        <main class="main-content">
-          <a class="github-link" :class="{ active:  scrollPos < 200 }" href="https://github.com/nostalgic-css/NES.css" target="_blank" rel="noopener" @mouseover="startAnimate" @mouseout="stopAnimate">
-            <p class="nes-balloon from-right">Fork me<br />on GitHub</p>
-            <i class="nes-octocat" :class="animateOctocat ? 'animate' : ''"></i>
-          </a>
 
-          <!-- about -->
-          <section class="topic">
-            <h2 id="about"><a href="#about">#</a>ERROR</h2>
-            <p>这个网站正在重写中......</p>
-          </section>
-        </main>
-    </div>
-    </div>
 </div>
+
 </body>
+</html>
