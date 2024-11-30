@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh">
+<title>点名器</title> <!-- 设置网页标签名称 -->
+<!-- 设置网页图标 -->
+<link rel="icon" href="./tb.jpg" type="image/jpeg"> <!-- 设置图标为跟目录的 tb.jpg 图片 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>背景图示例</title>
+    <style>
+        /* 设置背景图 */
+        body {
+            margin: 0;
+            height: 100vh;
+            background-image: url('./img/bg.webp');
+            background-size: cover; /* 使背景图自适应大小 */
+            background-position: center; /* 背景图居中 */
+            background-repeat: no-repeat; /* 防止背景图重复 */
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中 */
+            text-align: center;
+            font-family: 'YS', sans-serif; /* 默认使用指定字体 */
+        }
+
+        /* 设置字体 */
+        @font-face {
+            font-family: 'YS';
+            src: url('./fonts/ys.ttf') format('truetype');
+        }
+
+        /* 设置显示的图片 */
+        .center-image {
+            max-width: 60%; /* 限制图片宽度 */
+            max-height: 60%; /* 限制图片高度 */
+        }
+
+        /* 右下角按钮容器 */
+        .buttons {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            display: flex;
+            gap: 10px; /* 按钮之间的间距 */
+        }
+
+        /* 右上角按钮容器 */
+        .fates {
+            position: absolute;
+            right: 20px; /* 右上角位置 */
+            top: 20px; /* 顶部20px */
+            display: flex;
+            gap: 10px; /* 按钮之间的间距 */
+        }
+
+        /* 按钮样式 */
+        .fates button {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 60px;  /* 方形按钮宽度 */
+            height: 60px; /* 方形按钮高度 */
+            background-color: rgba(0, 0, 0, 0.5); /* 黑色半透明背景 */
+            border: none;
+            border-radius: 8px; /* 圆角 */
+            color: rgb(164, 154, 144); /* 字体颜色 */
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0;
+            transition: background-color 0.3s;
+        }
+
+        .fates button:hover {
+            background-color: rgba(0, 0, 0, 0.8); /* 鼠标悬停时按钮背景 */
+        }
+
+        .fates button img {
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 50%; /* 图标高度 */
+        }
+
+        .fates button .gi-plus {
+            margin-left: 5px;
+        }
+
+        .fates button span {
+            margin-left: 10px;
+        }
+
+        .fates button .primogem i,
+        .fates button .acquaint i {
+            font-size: 18px;
+        }
+
+        /* 按钮样式 */
+        .button {
+            background-image: url('./img/an.webp');
+            background-size: cover; /* 背景图填充 */
+            width: 250px; /* 按钮宽度 */
+            height: 60px; /* 按钮高度 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: rgb(164, 154, 144); /* 修改字体颜色为 rgb(164, 154, 144) */
+            font-size: 16px; /* 文字大小 */
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            padding: 0;
+            background-position: center;
+        }
+
+        .button .top {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .button .bottom {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .button .bottom img {
+            width: 20px;
+            height: auto;
+        }
+
+        .button .bottom span {
+            margin-left: 7px;
+        }
+
+        .button:hover {
+            opacity: 0.8; /* 鼠标悬停时略微透明 */
+        }
+
+        /* 防止文字被背景遮挡 */
+        .button span {
+            position: relative;
+            z-index: 1; /* 确保文字位于按钮的最上层 */
+        }
+    </style>
+</head>
+<body>
+    <img src="./img/2.png" alt="Center Image" class="center-image">
+
+    <!-- 右下角按钮 -->
+    <div class="buttons">
+        <a href="./1/index.html" class="button">
+            <div class="top">祈愿×1次</div>
+            <div class="bottom">
+                <img src="./img/jczy.webp" alt="acquaint"> <!-- 使用本地文件 -->
+                <span>x 1</span>
+            </div>
+        </a>
+        <a href="./10/index.html" class="button">
+            <div class="top">祈愿×10次</div>
+            <div class="bottom">
+                <img src="./img/jczy.webp" alt="acquaint"> <!-- 使用本地文件 -->
+                <span>x 10</span>
+            </div>
+        </a>
+    </div>
+
+
+
+</body>
+</html>
