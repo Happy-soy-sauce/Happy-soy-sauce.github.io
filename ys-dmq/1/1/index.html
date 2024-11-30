@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh">
+<title>点名器</title> <!-- 设置网页标签名称 -->
+<!-- 设置网页图标 -->
+<link rel="icon" href="./tb.jpg" type="image/jpeg"> <!-- 设置图标为跟目录的 tb.jpg 图片 -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随机抽取名字</title>
+    <style>
+        /* 引入自定义字体 */
+        @font-face {
+            font-family: 'YS';
+            src: url('./fonts/ys.ttf') format('truetype');
+        }
+
+        /* 页面基础样式 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'YS', sans-serif; /* 默认字体 */
+
+            /* 添加背景图片 */
+            background-image: url('./1.png'); /* 设置背景图 */
+            background-size: cover; /* 背景图片自适应屏幕 */
+            background-position: center; /* 背景图片居中 */
+            background-repeat: no-repeat; /* 防止背景图片重复 */
+        }
+
+        /* 显示名字的样式 */
+        .name-display {
+            font-size: 100px; /* 调大字号 */
+            color: black; /* 黑色文字 */
+            z-index: 1; /* 确保文字位于背景之上 */
+        }
+
+        /* 创建透明内容框，背景完全透明，文字改为白色 */
+        .content-box {
+            position: absolute;
+            top: 55%;  /* 从上往下60%的位置 */
+            left: 13%;  /* 从左往右10%的位置 */
+            font-size: 24px;  /* 调小字号 */
+            color: white;  /* 文字颜色改为白色 */
+            background-color: rgba(0, 0, 0, 0);  /* 完全透明背景 */
+            padding: 20px;
+            border-radius: 8px; /* 圆角边框 */
+            z-index: 2; /* 确保显示在其他元素之上 */
+        }
+
+        /* 右上角的返回按钮样式 */
+        .back-button {
+            position: absolute;
+            top: 20px;  /* 从顶部20px */
+            right: 20px; /* 从右侧20px */
+            font-size: 18px;
+            color: white; /* 白色文字 */
+            background-color: rgba(0, 0, 0, 0);  /* 背景透明 */
+            border: none;
+            cursor: pointer;
+            font-family: 'YS', sans-serif;
+            z-index: 3; /* 确保按钮在其他元素之上 */
+            text-decoration: none; /* 去掉链接下划线 */
+        }
+
+        .back-button:hover {
+            opacity: 0.8; /* 鼠标悬停时略微透明 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 显示随机选择的名字 -->
+    <div id="name-display" class="name-display"></div>
+
+    <!-- 透明内容框 -->
+    <div id="content-box" class="content-box"></div>
+
+    <!-- 返回按钮 -->
+    <a href="../../index.html" class="back-button">返回 &gt;</a>
+
+    <script>
+        // 直接在 HTML 中定义 csvData 数组
+        const csvData = [
+            { name: "一号", id: 1 },
+            { name: "二号", id: 2 },
+            { name: "三号", id: 3 },
+            { name: "四号", id: 4 },
+            { name: "五号", id: 5 },
+            { name: "六号", id: 6 },
+            { name: "七号", id: 7 },
+            { name: "八号", id: 8 },
+            { name: "九号", id: 9 },
+            { name: "十号", id: 10 },
+            { name: "十一号", id: 11 },
+        ];
+
+        // 等待页面加载完成后执行
+        window.onload = function() {
+            // 从 csvData 中随机抽取一个名字
+            const names = csvData.map(item => item.name);
+            const randomName = names[Math.floor(Math.random() * names.length)];
+
+            // 显示随机选择的名字
+            document.getElementById('name-display').textContent = randomName;
+
+            // 在透明内容框中显示相同的名字
+            document.getElementById('content-box').textContent = randomName;
+        };
+    </script>
+</body>
+</html>

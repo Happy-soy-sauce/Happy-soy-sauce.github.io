@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh">
+<title>点名器</title> <!-- 设置网页标签名称 -->
+<!-- 设置网页图标 -->
+<link rel="icon" href="./tb.jpg" type="image/jpeg"> <!-- 设置图标为跟目录的 tb.jpg 图片 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频自动播放</title>
+    <style>
+        /* 隐藏所有UI元素 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* 防止页面滚动 */
+        }
+
+        /* 引入自定义字体 */
+        @font-face {
+            font-family: 'YS';
+            src: url('./fonts/ys.ttf') format('truetype');
+        }
+
+        #video-container {
+            position: fixed; /* 固定位置 */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 保证视频覆盖整个容器 */
+        }
+
+        /* 完全透明的跳过按钮 */
+        .skip-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: transparent; /* 完全透明背景 */
+            color: white;
+            font-family: 'YS', sans-serif; /* 使用自定义字体 */
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 10; /* 确保按钮位于视频之上 */
+            opacity: 0.8; /* 按钮稍微透明 */
+        }
+
+        .skip-button:hover {
+            opacity: 1; /* 鼠标悬停时按钮完全不透明 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 视频容器 -->
+    <div id="video-container">
+        <video id="video" autoplay muted>
+            <source src="../img/1.mp4" type="video/mp4">
+            <!-- 可以尝试不同的视频格式 -->
+            <source src="../img/1.webm" type="video/webm">
+            <source src="../img/1.ogg" type="video/ogg">
+            您的浏览器不支持视频播放。
+        </video>
+
+        <!-- 跳过按钮 -->
+        <button class="skip-button" onclick="skipVideo()">跳过 ></button>
+    </div>
+
+    <script>
+        // 获取视频元素
+        const video = document.getElementById('video');
+
+        // 确保视频能在页面加载时播放
+        video.load();
+        video.play();
+
+        // 监听视频播放结束事件
+        video.onended = function() {
+            // 视频播放结束后跳转到 ./1.html
+            window.location.href = './1/index.html';
+        };
+
+        // 跳过视频的函数
+        function skipVideo() {
+            // 跳转到 ./1.html
+            window.location.href = './1/index.html';
+        }
+    </script>
+</body>
+</html>
