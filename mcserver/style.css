@@ -1,0 +1,327 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('1.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    min-height: 100vh;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    text-align: center;
+    margin: 15px 0 25px;
+    width: 100%;
+    max-width: 1400px;
+}
+
+h1 {
+    font-size: 2.8rem;
+    margin-bottom: 8px;
+    background: linear-gradient(to right, #4facfe, #00f2fe);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+    letter-spacing: 1px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #aaa;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+/* 页面容器 */
+.page-container {
+    display: flex;
+    width: 100%;
+    max-width: 1400px;
+    gap: 20px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+/* 左侧索引容器 */
+.index-container {
+    width: 240px;
+    background: rgba(25, 30, 45, 0.3);
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    border: 1px solid rgba(80, 130, 255, 0.2);
+    padding: 15px;
+    height: calc(100vh - 120px);
+    position: sticky;
+    top: 20px;
+    overflow-y: auto;
+    align-self: flex-start;
+}
+
+.index-container::-webkit-scrollbar {
+    width: 6px;
+}
+.index-container::-webkit-scrollbar-track {
+    background: rgba(40, 45, 60, 0.2);
+    border-radius: 3px;
+}
+.index-container::-webkit-scrollbar-thumb {
+    background: rgba(80, 130, 255, 0.3);
+    border-radius: 3px;
+}
+
+.index-title {
+    font-size: 1.2rem;
+    color: #4facfe;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(80, 130, 255, 0.3);
+    text-align: center;
+    position: sticky;
+    top: 0;
+    background: inherit;
+    padding-top: 15px;
+    z-index: 1;
+}
+
+.index-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 5px;
+}
+
+.index-item {
+    color: #ddd;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: rgba(40, 45, 60, 0.2);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.index-item:hover {
+    background: rgba(79, 172, 254, 0.2);
+    color: #4facfe;
+    transform: translateX(4px);
+}
+
+.index-item.active {
+    background: rgba(79, 172, 254, 0.3);
+    color: #4facfe;
+    font-weight: bold;
+}
+
+/* 主容器 */
+.main-container {
+    flex: 1;
+    background: rgba(20, 20, 30, 0.2);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    padding: 25px;
+    border: 1px solid rgba(100, 150, 255, 0.15);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+.player-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.player-card {
+    background: rgba(25, 30, 45, 0.35);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(80, 130, 255, 0.2);
+    scroll-margin-top: 30px;
+}
+
+.player-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 100, 255, 0.3);
+}
+
+.player-header {
+    background: rgba(40, 60, 100, 0.4);
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(100, 150, 255, 0.2);
+}
+
+.player-avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-right: 15px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.player-info {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.player-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4facfe;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-uuid {
+    font-size: 0.9rem;
+    color: #aaa;
+    margin-top: 3px;
+    font-family: monospace;
+}
+
+/* 周目容器样式 */
+.dimensions-container.stacked {
+    display: block;
+}
+
+.stacked-dimension {
+    padding: 15px 10px;
+    border-bottom: 1px solid rgba(100, 150, 255, 0.1); /* 周目之间添加分隔线 */
+}
+/* 最后一个周目去掉底部边框 */
+.stacked-dimension:last-child {
+    border-bottom: none;
+}
+
+/* 三周目标题样式（新增） */
+.dimension-1.stacked-dimension .dimension-title {
+    color: #f39c12;
+    border-bottom: 1px solid rgba(243, 156, 18, 0.3);
+}
+.dimension-2.stacked-dimension .dimension-title {
+    color: #9b59b6;
+    border-bottom: 1px solid rgba(155, 89, 182, 0.3);
+}
+.dimension-3.stacked-dimension .dimension-title { /* 三周目特有样式 */
+    color: #1abc9c;
+    border-bottom: 1px solid rgba(26, 188, 156, 0.3);
+}
+
+.dimension-title {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    text-align: center;
+    padding-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.stat-item {
+    background: rgba(40, 45, 60, 0.45);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.stat-item:hover {
+    background: rgba(50, 55, 75, 0.6);
+    transform: translateY(-2px);
+}
+
+.stat-value-sm {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #fff;
+    margin: 3px 0;
+    text-align: center;
+}
+
+.stat-label-sm {
+    font-size: 0.8rem;
+    color: #aaa;
+    text-align: center;
+    white-space: nowrap;
+}
+
+footer {
+    text-align: center;
+    color: #777;
+    padding: 15px;
+    font-size: 0.85rem;
+    width: 100%;
+    max-width: 1400px;
+    margin-top: auto;
+}
+
+/* 响应式调整 */
+@media (max-width: 900px) {
+    .page-container {
+        flex-direction: column;
+    }
+    .index-container {
+        width: 100%;
+        height: 180px;
+        position: static;
+        margin-bottom: 15px;
+    }
+    .index-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-height: 120px;
+        overflow-y: auto;
+        padding-right: 5px;
+    }
+    .index-item {
+        flex: 0 0 calc(50% - 4px);
+    }
+    .player-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 500px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+    .dimension-title {
+        font-size: 1rem;
+    }
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .index-item {
+        flex: 0 0 100%;
+    }
+}
