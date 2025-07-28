@@ -1,0 +1,1370 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>十八方块研究所玩家数据统计</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        // 索引与滚动同步脚本
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        document.querySelectorAll('.index-item').forEach(item => {
+                            item.classList.remove('active');
+                        });
+                        const uuid = entry.target.id.split('-')[1];
+                        const activeItem = document.querySelector(`.index-item[href="#player-${uuid}"]`);
+                        if (activeItem) activeItem.classList.add('active');
+                    });
+                });
+            }, { threshold: 0.5 });
+
+            document.querySelectorAll('.player-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>十八方块研究所玩家数据统计</h1>
+        <p class="subtitle">数据更新时间：2025年07月28日 15:58</p> <!-- 新增数据更新时间 -->
+    </header>
+    
+    <div class="page-container">
+        <!-- 左侧索引 -->
+        <div class="index-container">
+            <div class="index-title">玩家索引</div>
+            <div class="index-list">
+
+                <a href="#player-c698ab5d-7fe2-33da-8263-771063766a5c" class="index-item">Happysoysauce</a>
+    
+                <a href="#player-a3380a82-3a78-3005-aade-b2abe1eb1260" class="index-item">AL_S130</a>
+    
+                <a href="#player-ec47c891-f4e4-3e24-a867-a3994d20bc86" class="index-item">liuyingwolaopo</a>
+    
+                <a href="#player-0ccbb617-0bf8-3fe6-bc29-fa37af70b2b7" class="index-item">Lmingde</a>
+    
+                <a href="#player-4d297ff5-7362-3260-a932-e4b493190d51" class="index-item">mc</a>
+    
+                <a href="#player-d63f9bd3-b49c-377a-8990-f374cf09c3be" class="index-item">muchen</a>
+    
+                <a href="#player-435c502b-e10a-388c-960f-62e9a5742c26" class="index-item">Yuusha_Arisu</a>
+    
+                <a href="#player-b2458583-aec3-3529-ab66-81ab2e749b4d" class="index-item">liuyueban</a>
+    
+                <a href="#player-9ec6634a-7490-357d-9039-3d903d9fae2c" class="index-item">YunSFS</a>
+    
+                <a href="#player-6cbbd41c-1424-3276-b9e9-d935e92719e5" class="index-item">superamao666</a>
+    
+                <a href="#player-9dc2a299-6078-3ad0-a8c6-68b4dc256e91" class="index-item">laoer</a>
+    
+                <a href="#player-ae2fd05f-e596-3537-9d78-b4b62bfe874e" class="index-item">YAYA_Official</a>
+    
+            </div>
+        </div>
+        
+        <!-- 主内容区 -->
+        <div class="main-container">
+            <h2 style="text-align: center; margin-bottom: 20px; color: #4facfe; font-size: 1.8rem;">
+                玩家数据统计
+            </h2>
+            
+            <div class="player-container">
+
+            <!-- 玩家卡片 -->
+            <div class="player-card" id="player-c698ab5d-7fe2-33da-8263-771063766a5c">
+                <div class="player-header">
+                    <div class="player-avatar">
+                        <!-- 头像区域 -->
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">Happysoysauce</div>
+                        <div class="player-uuid">UUID: c698ab5d-7fe2-33da-8263-771063766a5c</div>
+                    </div>
+                </div>
+                
+                <div class="dimensions-container stacked">
+    
+                    <div class="dimension dimension-1 stacked-dimension">
+                        <div class="dimension-title">一周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">27h</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">24</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">107</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">60748.2m</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">70219</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">8244</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-2 stacked-dimension">
+                        <div class="dimension-title">二周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">29h</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">85</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">3220</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">121611.5m</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">567622</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">40239</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-3 stacked-dimension">
+                        <div class="dimension-title">三周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">7h</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">40</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">112</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">9353.4m</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">10411</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">13249</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+    
+            <!-- 玩家卡片 -->
+            <div class="player-card" id="player-a3380a82-3a78-3005-aade-b2abe1eb1260">
+                <div class="player-header">
+                    <div class="player-avatar">
+                        <!-- 头像区域 -->
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">AL_S130</div>
+                        <div class="player-uuid">UUID: a3380a82-3a78-3005-aade-b2abe1eb1260</div>
+                    </div>
+                </div>
+                
+                <div class="dimensions-container stacked">
+    
+                    <div class="dimension dimension-1 stacked-dimension">
+                        <div class="dimension-title">一周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">22h</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">36</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">506</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">79109.8m</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">88588</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">28652</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-2 stacked-dimension">
+                        <div class="dimension-title">二周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-3 stacked-dimension">
+                        <div class="dimension-title">三周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+    
+            <!-- 玩家卡片 -->
+            <div class="player-card" id="player-ec47c891-f4e4-3e24-a867-a3994d20bc86">
+                <div class="player-header">
+                    <div class="player-avatar">
+                        <!-- 头像区域 -->
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">liuyingwolaopo</div>
+                        <div class="player-uuid">UUID: ec47c891-f4e4-3e24-a867-a3994d20bc86</div>
+                    </div>
+                </div>
+                
+                <div class="dimensions-container stacked">
+    
+                    <div class="dimension dimension-1 stacked-dimension">
+                        <div class="dimension-title">一周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">20h</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">31</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">174</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">9049.9m</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">25293</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">13943</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-2 stacked-dimension">
+                        <div class="dimension-title">二周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">32h</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">128</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">14377</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">343845.2m</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">3486286</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">138022</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-3 stacked-dimension">
+                        <div class="dimension-title">三周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">4h</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">28</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">551</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">7625.4m</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">113025</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">13592</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+    
+            <!-- 玩家卡片 -->
+            <div class="player-card" id="player-0ccbb617-0bf8-3fe6-bc29-fa37af70b2b7">
+                <div class="player-header">
+                    <div class="player-avatar">
+                        <!-- 头像区域 -->
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">Lmingde</div>
+                        <div class="player-uuid">UUID: 0ccbb617-0bf8-3fe6-bc29-fa37af70b2b7</div>
+                    </div>
+                </div>
+                
+                <div class="dimensions-container stacked">
+    
+                    <div class="dimension dimension-1 stacked-dimension">
+                        <div class="dimension-title">一周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">20h</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">37</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">925</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">35570.5m</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">49921</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">25025</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-2 stacked-dimension">
+                        <div class="dimension-title">二周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-3 stacked-dimension">
+                        <div class="dimension-title">三周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+    
+            <!-- 玩家卡片 -->
+            <div class="player-card" id="player-4d297ff5-7362-3260-a932-e4b493190d51">
+                <div class="player-header">
+                    <div class="player-avatar">
+                        <!-- 头像区域 -->
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">mc</div>
+                        <div class="player-uuid">UUID: 4d297ff5-7362-3260-a932-e4b493190d51</div>
+                    </div>
+                </div>
+                
+                <div class="dimensions-container stacked">
+    
+                    <div class="dimension dimension-1 stacked-dimension">
+                        <div class="dimension-title">一周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">1h</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">4</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">5</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">2100.9m</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">878</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">1520</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-2 stacked-dimension">
+                        <div class="dimension-title">二周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-3 stacked-dimension">
+                        <div class="dimension-title">三周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+    
+            <!-- 玩家卡片 -->
+            <div class="player-card" id="player-d63f9bd3-b49c-377a-8990-f374cf09c3be">
+                <div class="player-header">
+                    <div class="player-avatar">
+                        <!-- 头像区域 -->
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">muchen</div>
+                        <div class="player-uuid">UUID: d63f9bd3-b49c-377a-8990-f374cf09c3be</div>
+                    </div>
+                </div>
+                
+                <div class="dimensions-container stacked">
+    
+                    <div class="dimension dimension-1 stacked-dimension">
+                        <div class="dimension-title">一周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">0h</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">4</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">5</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">566.5m</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">1606</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">1118</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-2 stacked-dimension">
+                        <div class="dimension-title">二周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-3 stacked-dimension">
+                        <div class="dimension-title">三周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+    
+            <!-- 玩家卡片 -->
+            <div class="player-card" id="player-435c502b-e10a-388c-960f-62e9a5742c26">
+                <div class="player-header">
+                    <div class="player-avatar">
+                        <!-- 头像区域 -->
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">Yuusha_Arisu</div>
+                        <div class="player-uuid">UUID: 435c502b-e10a-388c-960f-62e9a5742c26</div>
+                    </div>
+                </div>
+                
+                <div class="dimensions-container stacked">
+    
+                    <div class="dimension dimension-1 stacked-dimension">
+                        <div class="dimension-title">一周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">5h</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">3</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">80</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">21858.2m</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">32863</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">4072</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-2 stacked-dimension">
+                        <div class="dimension-title">二周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-3 stacked-dimension">
+                        <div class="dimension-title">三周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+    
+            <!-- 玩家卡片 -->
+            <div class="player-card" id="player-b2458583-aec3-3529-ab66-81ab2e749b4d">
+                <div class="player-header">
+                    <div class="player-avatar">
+                        <!-- 头像区域 -->
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">liuyueban</div>
+                        <div class="player-uuid">UUID: b2458583-aec3-3529-ab66-81ab2e749b4d</div>
+                    </div>
+                </div>
+                
+                <div class="dimensions-container stacked">
+    
+                    <div class="dimension dimension-1 stacked-dimension">
+                        <div class="dimension-title">一周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-2 stacked-dimension">
+                        <div class="dimension-title">二周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">72h</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">153</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">17041</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">344979.1m</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">2908024</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">76915</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-3 stacked-dimension">
+                        <div class="dimension-title">三周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+    
+            <!-- 玩家卡片 -->
+            <div class="player-card" id="player-9ec6634a-7490-357d-9039-3d903d9fae2c">
+                <div class="player-header">
+                    <div class="player-avatar">
+                        <!-- 头像区域 -->
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">YunSFS</div>
+                        <div class="player-uuid">UUID: 9ec6634a-7490-357d-9039-3d903d9fae2c</div>
+                    </div>
+                </div>
+                
+                <div class="dimensions-container stacked">
+    
+                    <div class="dimension dimension-1 stacked-dimension">
+                        <div class="dimension-title">一周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-2 stacked-dimension">
+                        <div class="dimension-title">二周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">43h</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">50</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">14756</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">194658.3m</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">2905661</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">56667</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-3 stacked-dimension">
+                        <div class="dimension-title">三周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">4h</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">20</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">133</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">6556.9m</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">35674</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">7893</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+    
+            <!-- 玩家卡片 -->
+            <div class="player-card" id="player-6cbbd41c-1424-3276-b9e9-d935e92719e5">
+                <div class="player-header">
+                    <div class="player-avatar">
+                        <!-- 头像区域 -->
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">superamao666</div>
+                        <div class="player-uuid">UUID: 6cbbd41c-1424-3276-b9e9-d935e92719e5</div>
+                    </div>
+                </div>
+                
+                <div class="dimensions-container stacked">
+    
+                    <div class="dimension dimension-1 stacked-dimension">
+                        <div class="dimension-title">一周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-2 stacked-dimension">
+                        <div class="dimension-title">二周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">1h</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">4</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">23</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">525.9m</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">2647</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">1465</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-3 stacked-dimension">
+                        <div class="dimension-title">三周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+    
+            <!-- 玩家卡片 -->
+            <div class="player-card" id="player-9dc2a299-6078-3ad0-a8c6-68b4dc256e91">
+                <div class="player-header">
+                    <div class="player-avatar">
+                        <!-- 头像区域 -->
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">laoer</div>
+                        <div class="player-uuid">UUID: 9dc2a299-6078-3ad0-a8c6-68b4dc256e91</div>
+                    </div>
+                </div>
+                
+                <div class="dimensions-container stacked">
+    
+                    <div class="dimension dimension-1 stacked-dimension">
+                        <div class="dimension-title">一周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-2 stacked-dimension">
+                        <div class="dimension-title">二周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-3 stacked-dimension">
+                        <div class="dimension-title">三周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">3h</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">14</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">99</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">2515.4m</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">21633</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">5707</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+    
+            <!-- 玩家卡片 -->
+            <div class="player-card" id="player-ae2fd05f-e596-3537-9d78-b4b62bfe874e">
+                <div class="player-header">
+                    <div class="player-avatar">
+                        <!-- 头像区域 -->
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">YAYA_Official</div>
+                        <div class="player-uuid">UUID: ae2fd05f-e596-3537-9d78-b4b62bfe874e</div>
+                    </div>
+                </div>
+                
+                <div class="dimensions-container stacked">
+    
+                    <div class="dimension dimension-1 stacked-dimension">
+                        <div class="dimension-title">一周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-2 stacked-dimension">
+                        <div class="dimension-title">二周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">----</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="dimension dimension-3 stacked-dimension">
+                        <div class="dimension-title">三周目数据</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value-sm">8h</div>
+                                <div class="stat-label-sm">游戏时间</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">151</div>
+                                <div class="stat-label-sm">死亡次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">469</div>
+                                <div class="stat-label-sm">击杀次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">6243.6m</div>
+                                <div class="stat-label-sm">移动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">10999</div>
+                                <div class="stat-label-sm">造成伤害</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value-sm">53140</div>
+                                <div class="stat-label-sm">收到伤害</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+    
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p style="margin-top: 8px;">&copy; 2025 十八方块研究所玩家数据统计面板</p>
+    </footer>
+</body>
+</html>
