@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自用的喵</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="css/clashadd.css">
+<script src="https://cdn.jsdelivr.net/npm/js-yaml@4/dist/js-yaml.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <header class="site-header">
+    <h1 class="site-title">自用的喵</h1>
+  </header>
+  <main>
+    <section class="card" id="introCard">
+      <h2 class="card-title">这干啥的</h2>
+      <p class="about-text">
+        机场 + maimai + UsagiPass 配置文件合成
+        <strong>机场（55 节点与全部策略组、规则，含 Bilibili / OpenAI 分流，实时抓取转 base64）</strong>
+        + <strong>maimai DX 查分器代理</strong>（wahlap.com 走 maimai 组，内置写死）
+        + <strong>UsagiPass 查分节点</strong>（wq.wahlap.net / sys-all.cn 等走 UsagiPass，内置写死）。
+      </p>
+      <h3 class="card-title" style="margin-top:14px">deepseek蹬出来的喵(随便看token(词源)apitoken（令牌）删干净了喵)</h3>
+      <h3 class="card-title" style="margin-top:14px">三个数据源  写死的喵，token（令牌）删干净了喵</h3>
+      <ul class="link-grid" id="sourceList" style="list-style:none;padding:0"></ul>
+      <h3 class="card-title" style="margin-top:14px">使用方法</h3>
+      <ol class="about-text" style="padding-left:20px">
+        <li>在 Clash Verge 中添加订阅：<code id="subLink"></code>（配置页面直出，无需外部 Worker）</li>
+        <li>本页带 <code>?token=&lt;mitce token&gt;</code>（或 <code>?1=&lt;完整地址&gt;</code>）可预览合并结果；不带参数时仅作功能介绍。</li>
+        <li>maimai 与 UsagiPass 及机场策略已内置，实时抓取仅需 mitce 节点列表。</li>
+      </ol>
+      <p class="about-text muted" id="workerHint"></p>
+    </section>
+    <section class="card" id="workCard" style="display:none">
+      <h2 class="card-title">合并配置预览 <span class="badge" id="statBadge">加载中…</span></h2>
+      <div class="download-row" style="margin-bottom:10px">
+        <button class="neu-btn primary" id="btnRefresh">重新获取</button>
+        <button class="neu-btn" id="btnCopy">复制配置</button>
+        <button class="neu-btn" id="btnDownload">下载 merged.yaml</button>
+      </div>
+      <div id="overview" style="margin-bottom:10px;font-size:13px"></div>
+      <details open>
+        <summary>完整配置文本（<span id="rawLen">0</span> 字节）</summary>
+        <pre id="rawPre" style="margin-top:8px"></pre>
+      </details>
+      <p class="error-msg muted" id="errArea" style="display:none"></p>
+    </section>
+  </main>
+  <footer class="footer-block">
+    <p class="muted">找到token算你赢得了</p>
+  </footer>
+</div>
+<script>
+(function () {
+  'use strict';
+
+  const HEAD_STR = `port: 7890
+socks-port: 7891
+mixed-port: 7892
+allow-lan: false
+bind-address: '*'
+mode: rule
+log-level: info
+ipv6: false
+find-process-mode: strict
+external-controller: '127.0.0.1:9090'
+profile:
+  store-selected: true
+  store-fake-ip: true
+unified-delay: true
+tcp-concurrent: true
+global-client-fingerprint: chrome
+ntp:
+  enable: true
+  write-to-system: false
+  server: ntp.aliyun.com
+  port: 123
+  interval: 30
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+dns:
+  enable: true
+  listen: ':53'
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter-mode: blacklist
+  prefer-h3: false
+  respect-rules: true
+  use-hosts: false
+  use-system-hosts: false
+  ipv6: true
+  fake-ip-filter:
+    - '*.lan'
+    - '*.local'
+    - '*.arpa'
+    - 'time.*.com'
+    - 'ntp.*.com'
+    - +.market.xiaomi.com
+    - localhost.ptlogin2.qq.com
+    - '*.msftncsi.com'
+    - www.msftconnecttest.com
+  default-nameserver:
+    - system
+    - 223.6.6.6
+    - 8.8.8.8
+    - '2400:3200::1'
+    - '2001:4860:4860::8888'
+  nameserver:
+    - 'https://doh.pub/dns-query'
+    - 'https://dns.alidns.com/dns-query'
+    - 8.8.8.8
+  direct-nameserver:
+    - 'https://doh.pub/dns-query'
+    - 'https://dns.alidns.com/dns-query'
+    - 223.5.5.5
+    - 119.29.29.29
+  direct-nameserver-follow-policy: true
+  fallback:
+    - 'https://1.1.1.1/dns-query'
+    - 'https://8.8.8.8/dns-query'
+    - 'https://dns.google/dns-query'
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    ipcidr:
+      - 240.0.0.0/4
+      - 0.0.0.0/32
+    domain:
+      - +.google.com
+      - +.facebook.com
+      - +.youtube.com
+      - +.twitter.com
+      - +.github.com
+  proxy-server-nameserver:
+    - 'https://doh.pub/dns-query'
+    - 'https://dns.alidns.com/dns-query'
+    - 'tls://223.5.5.5'
+tun:
+  enable: true
+  stack: system
+  auto-route: true
+  auto-detect-interface: true
+  strict-route: true
+  dns-hijack:
+    - 'any:53'
+  device: SakuraiTunnel
+  mtu: 1500
+  endpoint-independent-nat: true`;
+  const GROUPS_STR = `proxy-groups:
+  -
+    name: 主代理
+    type: select
+    proxies:
+      - 自动选择
+      - 负载均衡
+      - HK自动选择
+      - JP自动选择
+      - KR自动选择
+      - SG自动选择
+      - TW自动选择
+      - US自动选择
+      - HK负载均衡
+      - JP负载均衡
+      - KR负载均衡
+      - SG负载均衡
+      - TW负载均衡
+      - US负载均衡
+      - DIRECT
+      - HK-1
+      - HK-2
+      - HK-3
+      - HK-4
+      - HK-5
+      - HK-6
+      - HK2-HY2
+      - HK3-HY2
+      - HK4-HY2
+      - HK5-HY2
+      - JP-1
+      - JP-2
+      - JP-3
+      - JP-4
+      - JP-5
+      - JP-6
+      - JP6-HY2
+      - JP7-HY2
+      - JP8-HY2
+      - JP9-HY2
+      - JP10-HY2
+      - KR-1
+      - KR-2
+      - KR-3
+      - KR-4
+      - KR-5
+      - SG-1
+      - SG-2
+      - SG-3
+      - SG-4
+      - SG-5
+      - SG1-HY2
+      - SG2-HY2
+      - SG3-HY2
+      - TW-1
+      - TW-2
+      - TW-3
+      - TW-4
+      - TW-5
+      - TW-6
+      - TW-7
+      - TW-8
+      - TW-9
+      - TW-10
+      - US-1TCP
+      - US-2TCP
+      - US-3TCP
+      - US-4TCP
+      - US-5TCP
+      - US1-HY2
+      - US2-HY2
+      - US3-HY2
+      - US4-HY2
+      - US5-HY2
+      - US6-HY2
+  -
+    name: 自动选择
+    type: url-test
+    proxies:
+      - HK-1
+      - HK-2
+      - HK-3
+      - HK-4
+      - HK-5
+      - HK-6
+      - HK2-HY2
+      - HK3-HY2
+      - HK4-HY2
+      - HK5-HY2
+      - JP-1
+      - JP-2
+      - JP-3
+      - JP-4
+      - JP-5
+      - JP-6
+      - JP6-HY2
+      - JP7-HY2
+      - JP8-HY2
+      - JP9-HY2
+      - JP10-HY2
+      - KR-1
+      - KR-2
+      - KR-3
+      - KR-4
+      - KR-5
+      - SG-1
+      - SG-2
+      - SG-3
+      - SG-4
+      - SG-5
+      - SG1-HY2
+      - SG2-HY2
+      - SG3-HY2
+      - TW-1
+      - TW-2
+      - TW-3
+      - TW-4
+      - TW-5
+      - TW-6
+      - TW-7
+      - TW-8
+      - TW-9
+      - TW-10
+      - US-1TCP
+      - US-2TCP
+      - US-3TCP
+      - US-4TCP
+      - US-5TCP
+      - US1-HY2
+      - US2-HY2
+      - US3-HY2
+      - US4-HY2
+      - US5-HY2
+      - US6-HY2
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 180
+    tolerance: 25
+  -
+    name: 负载均衡
+    type: load-balance
+    proxies:
+      - HK-1
+      - HK-2
+      - HK-3
+      - HK-4
+      - HK-5
+      - HK-6
+      - HK2-HY2
+      - HK3-HY2
+      - HK4-HY2
+      - HK5-HY2
+      - JP-1
+      - JP-2
+      - JP-3
+      - JP-4
+      - JP-5
+      - JP-6
+      - JP6-HY2
+      - JP7-HY2
+      - JP8-HY2
+      - JP9-HY2
+      - JP10-HY2
+      - KR-1
+      - KR-2
+      - KR-3
+      - KR-4
+      - KR-5
+      - SG-1
+      - SG-2
+      - SG-3
+      - SG-4
+      - SG-5
+      - SG1-HY2
+      - SG2-HY2
+      - SG3-HY2
+      - TW-1
+      - TW-2
+      - TW-3
+      - TW-4
+      - TW-5
+      - TW-6
+      - TW-7
+      - TW-8
+      - TW-9
+      - TW-10
+      - US-1TCP
+      - US-2TCP
+      - US-3TCP
+      - US-4TCP
+      - US-5TCP
+      - US1-HY2
+      - US2-HY2
+      - US3-HY2
+      - US4-HY2
+      - US5-HY2
+      - US6-HY2
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+    tolerance: 50
+    strategy: consistent-hashing
+  -
+    name: HK自动选择
+    type: url-test
+    proxies:
+      - HK-1
+      - HK-2
+      - HK-3
+      - HK-4
+      - HK-5
+      - HK-6
+      - HK2-HY2
+      - HK3-HY2
+      - HK4-HY2
+      - HK5-HY2
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 180
+    tolerance: 25
+  -
+    name: JP自动选择
+    type: url-test
+    proxies:
+      - JP-1
+      - JP-2
+      - JP-3
+      - JP-4
+      - JP-5
+      - JP-6
+      - JP6-HY2
+      - JP7-HY2
+      - JP8-HY2
+      - JP9-HY2
+      - JP10-HY2
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 180
+    tolerance: 25
+  -
+    name: KR自动选择
+    type: url-test
+    proxies:
+      - KR-1
+      - KR-2
+      - KR-3
+      - KR-4
+      - KR-5
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 180
+    tolerance: 25
+  -
+    name: SG自动选择
+    type: url-test
+    proxies:
+      - SG-1
+      - SG-2
+      - SG-3
+      - SG-4
+      - SG-5
+      - SG1-HY2
+      - SG2-HY2
+      - SG3-HY2
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 180
+    tolerance: 25
+  -
+    name: TW自动选择
+    type: url-test
+    proxies:
+      - TW-1
+      - TW-2
+      - TW-3
+      - TW-4
+      - TW-5
+      - TW-6
+      - TW-7
+      - TW-8
+      - TW-9
+      - TW-10
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 180
+    tolerance: 25
+  -
+    name: US自动选择
+    type: url-test
+    proxies:
+      - US-1TCP
+      - US-2TCP
+      - US-3TCP
+      - US-4TCP
+      - US-5TCP
+      - US1-HY2
+      - US2-HY2
+      - US3-HY2
+      - US4-HY2
+      - US5-HY2
+      - US6-HY2
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 180
+    tolerance: 25
+  -
+    name: HK负载均衡
+    type: load-balance
+    proxies:
+      - HK-1
+      - HK-2
+      - HK-3
+      - HK-4
+      - HK-5
+      - HK-6
+      - HK2-HY2
+      - HK3-HY2
+      - HK4-HY2
+      - HK5-HY2
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+    tolerance: 50
+    strategy: consistent-hashing
+  -
+    name: JP负载均衡
+    type: load-balance
+    proxies:
+      - JP-1
+      - JP-2
+      - JP-3
+      - JP-4
+      - JP-5
+      - JP-6
+      - JP6-HY2
+      - JP7-HY2
+      - JP8-HY2
+      - JP9-HY2
+      - JP10-HY2
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+    tolerance: 50
+    strategy: consistent-hashing
+  -
+    name: KR负载均衡
+    type: load-balance
+    proxies:
+      - KR-1
+      - KR-2
+      - KR-3
+      - KR-4
+      - KR-5
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+    tolerance: 50
+    strategy: consistent-hashing
+  -
+    name: SG负载均衡
+    type: load-balance
+    proxies:
+      - SG-1
+      - SG-2
+      - SG-3
+      - SG-4
+      - SG-5
+      - SG1-HY2
+      - SG2-HY2
+      - SG3-HY2
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+    tolerance: 50
+    strategy: consistent-hashing
+  -
+    name: TW负载均衡
+    type: load-balance
+    proxies:
+      - TW-1
+      - TW-2
+      - TW-3
+      - TW-4
+      - TW-5
+      - TW-6
+      - TW-7
+      - TW-8
+      - TW-9
+      - TW-10
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+    tolerance: 50
+    strategy: consistent-hashing
+  -
+    name: US负载均衡
+    type: load-balance
+    proxies:
+      - US-1TCP
+      - US-2TCP
+      - US-3TCP
+      - US-4TCP
+      - US-5TCP
+      - US1-HY2
+      - US2-HY2
+      - US3-HY2
+      - US4-HY2
+      - US5-HY2
+      - US6-HY2
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+    tolerance: 50
+    strategy: consistent-hashing
+  -
+    name: Bahamut
+    type: select
+    proxies:
+      - 主代理
+      - 自动选择
+      - 负载均衡
+      - HK自动选择
+      - JP自动选择
+      - KR自动选择
+      - SG自动选择
+      - TW自动选择
+      - US自动选择
+      - HK负载均衡
+      - JP负载均衡
+      - KR负载均衡
+      - SG负载均衡
+      - TW负载均衡
+      - US负载均衡
+  -
+    name: Bilibili
+    type: select
+    proxies:
+      - DIRECT
+      - 主代理
+      - 自动选择
+      - 负载均衡
+      - HK自动选择
+      - JP自动选择
+      - KR自动选择
+      - SG自动选择
+      - TW自动选择
+      - US自动选择
+      - HK负载均衡
+      - JP负载均衡
+      - KR负载均衡
+      - SG负载均衡
+      - TW负载均衡
+      - US负载均衡
+  -
+    name: Discord
+    type: select
+    proxies:
+      - 主代理
+      - 自动选择
+      - 负载均衡
+      - HK自动选择
+      - JP自动选择
+      - KR自动选择
+      - SG自动选择
+      - TW自动选择
+      - US自动选择
+      - HK负载均衡
+      - JP负载均衡
+      - KR负载均衡
+      - SG负载均衡
+      - TW负载均衡
+      - US负载均衡
+  -
+    name: GoogleFCM
+    type: select
+    proxies:
+      - 主代理
+      - 自动选择
+      - 负载均衡
+      - HK自动选择
+      - JP自动选择
+      - KR自动选择
+      - SG自动选择
+      - TW自动选择
+      - US自动选择
+      - HK负载均衡
+      - JP负载均衡
+      - KR负载均衡
+      - SG负载均衡
+      - TW负载均衡
+      - US负载均衡
+  -
+    name: Netflix
+    type: select
+    proxies:
+      - 主代理
+      - 自动选择
+      - 负载均衡
+      - HK自动选择
+      - JP自动选择
+      - KR自动选择
+      - SG自动选择
+      - TW自动选择
+      - US自动选择
+      - HK负载均衡
+      - JP负载均衡
+      - KR负载均衡
+      - SG负载均衡
+      - TW负载均衡
+      - US负载均衡
+  -
+    name: OpenAI
+    type: select
+    proxies:
+      - 主代理
+      - 自动选择
+      - 负载均衡
+      - HK自动选择
+      - JP自动选择
+      - KR自动选择
+      - SG自动选择
+      - TW自动选择
+      - US自动选择
+      - HK负载均衡
+      - JP负载均衡
+      - KR负载均衡
+      - SG负载均衡
+      - TW负载均衡
+      - US负载均衡
+  -
+    name: Speedtest
+    type: select
+    proxies:
+      - 主代理
+      - 自动选择
+      - 负载均衡
+      - HK自动选择
+      - JP自动选择
+      - KR自动选择
+      - SG自动选择
+      - TW自动选择
+      - US自动选择
+      - HK负载均衡
+      - JP负载均衡
+      - KR负载均衡
+      - SG负载均衡
+      - TW负载均衡
+      - US负载均衡
+  -
+    name: Spotify
+    type: select
+    proxies:
+      - 主代理
+      - 自动选择
+      - 负载均衡
+      - HK自动选择
+      - JP自动选择
+      - KR自动选择
+      - SG自动选择
+      - TW自动选择
+      - US自动选择
+      - HK负载均衡
+      - JP负载均衡
+      - KR负载均衡
+      - SG负载均衡
+      - TW负载均衡
+      - US负载均衡
+  -
+    name: Steam
+    type: select
+    proxies:
+      - DIRECT
+      - 主代理
+      - 自动选择
+      - 负载均衡
+      - HK自动选择
+      - JP自动选择
+      - KR自动选择
+      - SG自动选择
+      - TW自动选择
+      - US自动选择
+      - HK负载均衡
+      - JP负载均衡
+      - KR负载均衡
+      - SG负载均衡
+      - TW负载均衡
+      - US负载均衡
+  -
+    name: Telegram
+    type: select
+    proxies:
+      - 主代理
+      - 自动选择
+      - 负载均衡
+      - HK自动选择
+      - JP自动选择
+      - KR自动选择
+      - SG自动选择
+      - TW自动选择
+      - US自动选择
+      - HK负载均衡
+      - JP负载均衡
+      - KR负载均衡
+      - SG负载均衡
+      - TW负载均衡
+      - US负载均衡
+  -
+    name: TikTok
+    type: select
+    proxies:
+      - 主代理
+      - 自动选择
+      - 负载均衡
+      - HK自动选择
+      - JP自动选择
+      - KR自动选择
+      - SG自动选择
+      - TW自动选择
+      - US自动选择
+      - HK负载均衡
+      - JP负载均衡
+      - KR负载均衡
+      - SG负载均衡
+      - TW负载均衡
+      - US负载均衡
+  -
+    name: Apple
+    type: select
+    proxies:
+      - DIRECT
+      - 主代理
+      - 自动选择
+      - 负载均衡
+      - HK自动选择
+      - JP自动选择
+      - KR自动选择
+      - SG自动选择
+      - TW自动选择
+      - US自动选择
+      - HK负载均衡
+      - JP负载均衡
+      - KR负载均衡
+      - SG负载均衡
+      - TW负载均衡
+      - US负载均衡
+  -
+    name: Google
+    type: select
+    proxies:
+      - 主代理
+      - 自动选择
+      - 负载均衡
+      - HK自动选择
+      - JP自动选择
+      - KR自动选择
+      - SG自动选择
+      - TW自动选择
+      - US自动选择
+      - HK负载均衡
+      - JP负载均衡
+      - KR负载均衡
+      - SG负载均衡
+      - TW负载均衡
+      - US负载均衡
+  -
+    name: Microsoft
+    type: select
+    proxies:
+      - DIRECT
+      - 主代理
+      - 自动选择
+      - 负载均衡
+      - HK自动选择
+      - JP自动选择
+      - KR自动选择
+      - SG自动选择
+      - TW自动选择
+      - US自动选择
+      - HK负载均衡
+      - JP负载均衡
+      - KR负载均衡
+      - SG负载均衡
+      - TW负载均衡
+      - US负载均衡
+  -
+    name: 黑名单网站
+    type: select
+    proxies:
+      - 主代理
+      - 自动选择
+      - 负载均衡
+      - HK自动选择
+      - JP自动选择
+      - KR自动选择
+      - SG自动选择
+      - TW自动选择
+      - US自动选择
+      - HK负载均衡
+      - JP负载均衡
+      - KR负载均衡
+      - SG负载均衡
+      - TW负载均衡
+      - US负载均衡
+  -
+    name: 中国大陆网站
+    type: select
+    proxies:
+      - DIRECT
+      - 主代理
+      - 自动选择
+      - 负载均衡
+      - HK自动选择
+      - JP自动选择
+      - KR自动选择
+      - SG自动选择
+      - TW自动选择
+      - US自动选择
+      - HK负载均衡
+      - JP负载均衡
+      - KR负载均衡
+      - SG负载均衡
+      - TW负载均衡
+      - US负载均衡`;
+  const PROVIDERS_STR = `rule-providers:
+  Bahamut-Site:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/Bahamut/Bahamut-Site.mrs'
+    path: ./ruleset/Bahamut-Site.mrs
+    proxy: DIRECT
+    interval: 86400
+  Apple-Site:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/Apple/Apple-Site.mrs'
+    path: ./ruleset/Apple-Site.mrs
+    proxy: DIRECT
+    interval: 86400
+  Apple-IP:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/Apple/Apple-IP.mrs'
+    path: ./ruleset/Apple-IP.mrs
+    proxy: DIRECT
+    interval: 86400
+  Bilibili-Site:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/Bilibili/Bilibili-Site.mrs'
+    path: ./ruleset/Bilibili-Site.mrs
+    proxy: DIRECT
+    interval: 86400
+  Bilibili-IP:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/Bilibili/Bilibili-IP.mrs'
+    path: ./ruleset/Bilibili-IP.mrs
+    proxy: DIRECT
+    interval: 86400
+  China-Site:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/China/China-Site.mrs'
+    path: ./ruleset/China-Site.mrs
+    proxy: DIRECT
+    interval: 86400
+  China-IP:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/China/China-IP.mrs'
+    path: ./ruleset/China-IP.mrs
+    proxy: DIRECT
+    interval: 86400
+  Discord-Site:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/Discord/Discord-Site.mrs'
+    path: ./ruleset/Discord-Site.mrs
+    proxy: DIRECT
+    interval: 86400
+  GFWList-Site:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/GFWList/GFWList-Site.mrs'
+    path: ./ruleset/GFWList-Site.mrs
+    proxy: DIRECT
+    interval: 86400
+  Google-Site:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/Google/Google-Site.mrs'
+    path: ./ruleset/Google-Site.mrs
+    proxy: DIRECT
+    interval: 86400
+  Google-IP:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/Google/Google-IP.mrs'
+    path: ./ruleset/Google-IP.mrs
+    proxy: DIRECT
+    interval: 86400
+  GoogleFCM-Site:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/GoogleFCM/GoogleFCM-Site.mrs'
+    path: ./ruleset/GoogleFCM-Site.mrs
+    proxy: DIRECT
+    interval: 86400
+  Local-IP:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/Local/Local-IP.mrs'
+    path: ./ruleset/Local-IP.mrs
+    proxy: DIRECT
+    interval: 86400
+  Microsoft-Site:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/Microsoft/Microsoft-Site.mrs'
+    path: ./ruleset/Microsoft-Site.mrs
+    proxy: DIRECT
+    interval: 86400
+  Netflix-Site:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/Netflix/Netflix-Site.mrs'
+    path: ./ruleset/Netflix-Site.mrs
+    proxy: DIRECT
+    interval: 86400
+  Netflix-IP:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/Netflix/Netflix-IP.mrs'
+    path: ./ruleset/Netflix-IP.mrs
+    proxy: DIRECT
+    interval: 86400
+  OpenAI-Site:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/OpenAI/OpenAI-Site.mrs'
+    path: ./ruleset/OpenAI-Site.mrs
+    proxy: DIRECT
+    interval: 86400
+  OpenAI-IP:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/OpenAI/OpenAI-IP.mrs'
+    path: ./ruleset/OpenAI-IP.mrs
+    proxy: DIRECT
+    interval: 86400
+  Speedtest-Site:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/Speedtest/Speedtest-Site.mrs'
+    path: ./ruleset/Speedtest-Site.mrs
+    proxy: DIRECT
+    interval: 86400
+  Spotify-Site:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/Spotify/Spotify-Site.mrs'
+    path: ./ruleset/Spotify-Site.mrs
+    proxy: DIRECT
+    interval: 86400
+  Spotify-IP:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/Spotify/Spotify-IP.mrs'
+    path: ./ruleset/Spotify-IP.mrs
+    proxy: DIRECT
+    interval: 86400
+  Steam-Site:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/Steam/Steam-Site.mrs'
+    path: ./ruleset/Steam-Site.mrs
+    proxy: DIRECT
+    interval: 86400
+  Telegram-Site:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/Telegram/Telegram-Site.mrs'
+    path: ./ruleset/Telegram-Site.mrs
+    proxy: DIRECT
+    interval: 86400
+  Telegram-IP:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/Telegram/Telegram-IP.mrs'
+    path: ./ruleset/Telegram-IP.mrs
+    proxy: DIRECT
+    interval: 86400
+  TikTok-Site:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://cdn.jsdmirror.com/gh/HosheaPDNX/rule-set@V2.0.0/mihomo/TikTok/TikTok-Site.mrs'
+    path: ./ruleset/TikTok-Site.mrs
+    proxy: DIRECT
+    interval: 86400`;
+  const RULES_STR = `rules:
+  - 'AND,((DST-PORT,443),(NETWORK,UDP)),REJECT'
+  - 'DOMAIN,ntp.aliyun.com,DIRECT'
+  - 'DOMAIN,proxy.sakuraikaede.com,DIRECT'
+  - 'DOMAIN,converter-mitce.sakuraikaede.com,DIRECT'
+  - 'DOMAIN-KEYWORD,msftconnecttest.com,主代理'
+  - 'DOMAIN-KEYWORD,msftncsi.com,主代理'
+  - 'DOMAIN-KEYWORD,googleapis,Google'
+  - 'RULE-SET,Bahamut-Site,Bahamut'
+  - 'RULE-SET,Bilibili-Site,Bilibili'
+  - 'RULE-SET,Discord-Site,Discord'
+  - 'RULE-SET,GoogleFCM-Site,GoogleFCM'
+  - 'RULE-SET,Netflix-Site,Netflix'
+  - 'RULE-SET,OpenAI-Site,OpenAI'
+  - 'RULE-SET,Speedtest-Site,Speedtest'
+  - 'RULE-SET,Spotify-Site,Spotify'
+  - 'RULE-SET,Steam-Site,Steam'
+  - 'RULE-SET,Telegram-Site,Telegram'
+  - 'RULE-SET,TikTok-Site,TikTok'
+  - 'RULE-SET,Apple-Site,Apple'
+  - 'RULE-SET,Google-Site,Google'
+  - 'RULE-SET,Microsoft-Site,Microsoft'
+  - 'RULE-SET,GFWList-Site,黑名单网站'
+  - 'RULE-SET,China-Site,中国大陆网站'
+  - 'RULE-SET,Local-IP,DIRECT,no-resolve'
+  - 'RULE-SET,Bilibili-IP,Bilibili'
+  - 'RULE-SET,Netflix-IP,Netflix'
+  - 'RULE-SET,OpenAI-IP,OpenAI'
+  - 'RULE-SET,Spotify-IP,Spotify'
+  - 'RULE-SET,Telegram-IP,Telegram'
+  - 'RULE-SET,Apple-IP,Apple'
+  - 'RULE-SET,Google-IP,Google'
+  - 'RULE-SET,China-IP,中国大陆网站'
+  - 'MATCH,主代理'`;
+
+  const MAIMAI_PROXY = `  -\n    name: maimai DX 查分器代理\n    server: proxy.maimai.lxns.net\n    port: 8080\n    type: http`;
+  const MAIMAI_GROUP = `  -\n    name: maimai\n    type: select\n    proxies:\n      - maimai DX 查分器代理\n      - UsagiPass`;
+  const MAIMAI_RULE = '  - DOMAIN-SUFFIX,wahlap.com,maimai';
+  const USAGI_PROXY = `  -\n    name: UsagiPass\n    type: ss\n    server: up.turou.fun\n    port: 15678\n    cipher: chacha20-ietf-poly1305\n    password: o5bZUHHvbFLy3eXkzi2M\n    udp: false`;
+  const USAGI_RULES = [
+    'DOMAIN-SUFFIX,wq.wahlap.net,UsagiPass',
+    'DOMAIN-SUFFIX,sys-all.cn,UsagiPass',
+    'DOMAIN-SUFFIX,sys-allnet.cn,UsagiPass',
+    'DOMAIN,tgk-wcaime.wahlap.com,UsagiPass',
+  ];
+
+  const MITCE_BASE = 'https://app.mitce.net/?sid=322737&token=';
+  const DEFAULT_TOKEN = 'f853c68f200f08aeba2a';
+  const FETCH_PROXY = 'https://clash-merger.vercel.app/api/fetch-sub';
+
+  function parseUrl(url) {
+    const hashIdx = url.indexOf('#');
+    const name = hashIdx >= 0 ? decodeURIComponent(url.slice(hashIdx + 1)) : 'Node';
+    const noFrag = hashIdx >= 0 ? url.slice(0, hashIdx) : url;
+    if (noFrag.startsWith('vless://')) {
+      const m = noFrag.match(/^vless:\/\/([^@]+)@([^:]+):(\d+)\?(.*)$/);
+      if (!m) return null;
+      const [, uuid, server, port, queryStr] = m;
+      const q = new URLSearchParams(queryStr);
+      return {
+        name, type: 'vless', server, port: Number(port), uuid,
+        network: 'grpc', tls: true, udp: true,
+        'packet-encoding': 'xudp', cipher: 'auto', 'skip-cert-verify': false,
+        servername: q.get('sni') || '',
+        'client-fingerprint': q.get('fp') || 'chrome',
+        'reality-opts': { 'public-key': q.get('pbk'), 'short-id': q.get('sid') },
+        'grpc-opts': { 'grpc-service-name': q.get('serviceName') || '' },
+      };
+    }
+    if (noFrag.startsWith('hysteria2://')) {
+      const m = noFrag.match(/^hysteria2:\/\/([^@]+)@([^:]+):(\d+)\/?(.*)$/);
+      if (!m) return null;
+      const [, password, server, port, queryStr] = m;
+      const q = new URLSearchParams(queryStr.replace(/^\?/, ''));
+      const obj = {
+        name, type: 'hysteria2', server, port: Number(port),
+        password: decodeURIComponent(password), 'skip-cert-verify': false,
+      };
+      if (q.get('sni')) obj.sni = q.get('sni');
+      if (q.get('obfs')) { obj.obfs = q.get('obfs'); obj['obfs-password'] = q.get('obfs-password'); }
+      return obj;
+    }
+    if (noFrag.startsWith('tuic://')) {
+      const m = noFrag.match(/^tuic:\/\/([^@]+)@([^:]+):(\d+)\?(.*)$/);
+      if (!m) return null;
+      const [, userinfo, server, port, queryStr] = m;
+      const q = new URLSearchParams(queryStr);
+      const [uuid, password] = userinfo.split(':');
+      return {
+        name, type: 'tuic', server, port: Number(port),
+        uuid: decodeURIComponent(uuid), password: decodeURIComponent(password),
+        alpn: q.get('alpn') ? q.get('alpn').split(',') : ['h3'],
+        'congestion-controller': q.get('congestion_control') || 'bbr',
+        'udp-relay-mode': q.get('udp_relay_mode') || 'native',
+        'skip-cert-verify': q.get('insecure') === '1',
+      };
+    }
+    return null;
+  }
+
+  function yamlVal(v) {
+    if (typeof v === 'string') {
+      if (v === '' || /^\s|\s$/.test(v) || /[:#\[\]{}&*!|>'\"%@`]/.test(v) || /^(true|false|yes|no|on|off|null|~)$/i.test(v) || /^-?\d/.test(v))
+        return JSON.stringify(v);
+      return v;
+    }
+    return String(v);
+  }
+
+  function proxyToYaml(p) {
+    const lines = ['  -'];
+    for (const [k, v] of Object.entries(p)) {
+      if (v === null || v === undefined) continue;
+      if (Array.isArray(v)) {
+        lines.push('    ' + k + ':');
+        v.forEach(item => lines.push('      - ' + yamlVal(item)));
+      } else if (typeof v === 'object') {
+        lines.push('    ' + k + ':');
+        for (const [k2, v2] of Object.entries(v)) {
+          lines.push('      ' + k2 + ': ' + yamlVal(v2));
+        }
+      } else {
+        lines.push('    ' + k + ': ' + yamlVal(v));
+      }
+    }
+    return lines.join('\\n');
+  }
+
+  function convertLinks(base64) {
+    const text = atob(base64);
+    const lines = text.split('\\n').map(l => l.trim()).filter(l => l.length > 0);
+    return lines.map(url => parseUrl(url)).filter(Boolean);
+  }
+
+  function buildConfig(proxies) {
+    const proxiesYaml = proxies.map(p => proxyToYaml(p)).join('\\n');
+    const usagiRulesStr = USAGI_RULES.map(r => '  - ' + r).join('\\n');
+    const rulesLines = RULES_STR.split('\\n');
+    const rulesHeader = rulesLines[0]; // 'rules:'
+    const rulesBody = rulesLines.slice(1).join('\\n');
+    return [
+      HEAD_STR,
+      'proxies:',
+      proxiesYaml,
+      MAIMAI_PROXY,
+      USAGI_PROXY,
+      '',
+      GROUPS_STR,
+      MAIMAI_GROUP,
+      '',
+      PROVIDERS_STR,
+      rulesHeader,
+      usagiRulesStr,
+      MAIMAI_RULE,
+      rulesBody,
+    ].join('\\n');
+  }
+
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  var params = new URLSearchParams(location.search);
+  var hasParams = params.has('token') || params.has('1');
+  var token = (params.get('token') || '').trim() || DEFAULT_TOKEN;
+  var url1 = (params.get('1') || '').trim() || (token ? MITCE_BASE + encodeURIComponent(token) : '');
+  var rawText = '';
+
+  document.getElementById('sourceList').innerHTML =
+    '<li class="index-item">mitce：<code>实时抓取 base64 转节点（token 写死或 ?token= 覆盖）</code></li>' +
+    '<li class="index-item">maimai：<code>内置写死（maimai DX 查分器代理 + maimai 组 + wahlap.com 规则）</code></li>' +
+    '<li class="index-item">UsagiPass：<code>内置写死（ss 节点 + 4 条分流规则）</code></li>';
+
+  document.getElementById('workerHint').innerHTML = '配置页面直出，无需外部 Worker。' +
+    (token === DEFAULT_TOKEN ? ' 使用默认 token。' : ' 使用 ?token= 传入的 token。');
+
+  if (!hasParams) return;
+
+  document.getElementById('introCard').style.display = 'none';
+  document.getElementById('workCard').style.display = 'block';
+
+  function load() {
+    document.getElementById('statBadge').textContent = '加载中\u2026';
+    fetch(FETCH_PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: url1 }),
+    })
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function (data) {
+      var proxies = convertLinks(data.content);
+      if (!proxies.length) throw new Error('\u672a\u89e3\u6790\u5230\u4efb\u4f55\u8282\u70b9');
+      var yaml = buildConfig(proxies);
+      rawText = yaml;
+      document.getElementById('rawPre').textContent = yaml;
+      document.getElementById('rawLen').textContent = yaml.length;
+      try {
+        var doc = jsyaml.load(yaml);
+        var p = doc.proxies || [], g = doc['proxy-groups'] || [], r = doc.rules || [];
+        var types = {};
+        p.forEach(function (x) { types[x.type] = (types[x.type] || 0) + 1; });
+        var tStr = Object.keys(types).map(function (t) { return t + ' \u00d7' + types[t]; }).join('\u3001');
+        var gNames = g.map(function (x) { return x.name; }).slice(0, 8).join('\u3001') + (g.length > 8 ? ' \u2026' : '');
+        document.getElementById('overview').innerHTML =
+          '<strong>\u8282\u70b9 ' + p.length + ' \u4e2a</strong>\uff08' + tStr + '\uff09\u00b7 ' +
+          '\u7b56\u7565\u7ec4 ' + g.length + ' \u4e2a\uff08' + esc(gNames) + '\uff09\u00b7 ' +
+          '\u89c4\u5219 ' + r.length + ' \u6761 \u00b7 rule-providers ' + (Object.keys(doc['rule-providers'] || {}).length) + ' \u4e2a';
+        document.getElementById('statBadge').textContent = p.length + ' \u8282\u70b9 / ' + g.length + ' \u7ec4 / ' + r.length + ' \u89c4\u5219';
+      } catch (e) {
+        document.getElementById('overview').innerHTML = '<span class="error-msg">js-yaml \u89e3\u6790\u5931\u8d25\uff1a' + esc(e.message) + '</span>';
+      }
+    })
+    .catch(function (e) {
+      document.getElementById('statBadge').textContent = '\u83b7\u53d6\u5931\u8d25';
+      document.getElementById('errArea').textContent = '\u83b7\u53d6\u5931\u8d25\uff1a' + esc(e.message);
+      document.getElementById('errArea').style.display = 'block';
+    });
+  }
+
+  document.getElementById('btnRefresh').addEventListener('click', load);
+  document.getElementById('btnCopy').addEventListener('click', function () {
+    if (!rawText) return;
+    navigator.clipboard.writeText(rawText).then(function () { alert('\u5df2\u590d\u5236'); }).catch(function () { alert('\u590d\u5236\u5931\u8d25'); });
+  });
+  document.getElementById('btnDownload').addEventListener('click', function () {
+    if (!rawText) return;
+    var blob = new Blob([rawText], { type: 'text/yaml' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'merged.yaml';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>
