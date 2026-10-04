@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我开发的 Mod | 快乐的酱油的网站</title>
-    <link rel="icon" href="icons/mcmod-favicon.ico">
+    <title>我的作品 | 快乐的酱油的网站</title>
+    <link rel="icon" href="mod/icons/mcmod-favicon.ico">
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -20,20 +20,82 @@
         <a class="back-link" href="../index.html">← 返回主页</a>
 
         <section class="card">
-            <h2 class="card-title">我开发的 Mod</h2>
-            <p class="about-text">以下是我开发（或参与开发）的 Minecraft 模组，点击可查看详情。</p>
-            <div class="mcmod-list">
+            <h2 class="card-title">我的作品</h2>
+            <p class="about-text">以下是我创作/开发的关于 Minecraft 的模组与原理图</p>
 
-                <a class="mcmod-row" href="ChatImageLite/index.html">
-                    <span class="mcmod-row-icon"><img src="ChatImageLite/icon.png" alt="ChatImage Lite"></span>
-                    <span class="mcmod-row-main">
-                        <span class="mcmod-row-name">ChatImage Lite</span>
-                        <span class="mcmod-row-desc">在聊天栏中渲染图片的轻量模组 · MC 26.2 · 客户端</span>
-                    </span>
-                    <span class="mcmod-row-arrow">→</span>
-                </a>
-
+            <!-- 目录切换按钮 -->
+            <div class="tab-bar">
+                <button type="button" class="tab-btn active" onclick="switchTab('mod', this)">Mod 目录</button>
+                <button type="button" class="tab-btn" onclick="switchTab('litematic', this)">原理图目录</button>
             </div>
+
+            <!-- Mod 目录 -->
+            <div id="tab-mod" class="tab-panel active">
+                <div class="mcmod-list">
+
+                    <a class="mcmod-row" href="mod/ChatImageLite/index.html">
+                        <span class="mcmod-row-icon"><img src="mod/ChatImageLite/icon.png" alt="ChatImage Lite"></span>
+                        <span class="mcmod-row-main">
+                            <span class="mcmod-row-name">ChatImage Lite</span>
+                            <span class="mcmod-row-desc">在聊天栏中渲染图片的轻量模组 · MC 26.2 · 客户端</span>
+                        </span>
+                        <span class="mcmod-row-arrow">→</span>
+                    </a>
+
+                </div>
+            </div>
+
+            <!-- 原理图目录 -->
+            <div id="tab-litematic" class="tab-panel">
+                <div class="mcmod-list">
+                    <!-- 占位：列出但不可下载（非公开） -->
+                    <div class="mcmod-row disabled">
+                        <span class="mcmod-row-icon emoji">📐</span>
+                        <span class="mcmod-row-main">
+                            <span class="mcmod-row-name">红乐 - NEO</span>
+                            <span class="mcmod-row-desc">原理图 · 非公开</span>
+                        </span>
+                        <span class="mcmod-row-arrow">🔒</span>
+                    </div>
+
+                    <a class="mcmod-row" href="litematic/红乐 - 中国人能飞.litematic" download>
+                        <span class="mcmod-row-icon emoji">📐</span>
+                        <span class="mcmod-row-main">
+                            <span class="mcmod-row-name">红乐 - 中国人能飞</span>
+                            <span class="mcmod-row-desc">原理图 · 1.4 KB</span>
+                        </span>
+                        <span class="mcmod-row-arrow">⬇</span>
+                    </a>
+
+                    <a class="mcmod-row" href="litematic/红乐 - 兔子洞.litematic" download>
+                        <span class="mcmod-row-icon emoji">📐</span>
+                        <span class="mcmod-row-main">
+                            <span class="mcmod-row-name">红乐 - 兔子洞</span>
+                            <span class="mcmod-row-desc">原理图 · 2.4 KB</span>
+                        </span>
+                        <span class="mcmod-row-arrow">⬇</span>
+                    </a>
+
+                    <a class="mcmod-row" href="litematic/红乐 - 海底谭.litematic" download>
+                        <span class="mcmod-row-icon emoji">📐</span>
+                        <span class="mcmod-row-main">
+                            <span class="mcmod-row-name">红乐 - 海底谭</span>
+                            <span class="mcmod-row-desc">原理图 · 623 B</span>
+                        </span>
+                        <span class="mcmod-row-arrow">⬇</span>
+                    </a>
+
+                    <a class="mcmod-row" href="litematic/红乐 - 物凄い狂っとるフランちゃんが物凄いうた.litematic" download>
+                        <span class="mcmod-row-icon emoji">📐</span>
+                        <span class="mcmod-row-main">
+                            <span class="mcmod-row-name">红乐 - 物凄い狂っとるフランちゃんが物凄いうた</span>
+                            <span class="mcmod-row-desc">原理图 · 1.7 KB</span>
+                        </span>
+                        <span class="mcmod-row-arrow">⬇</span>
+                    </a>
+                </div>
+            </div>
+
         </section>
 
     </main>
@@ -41,6 +103,21 @@
     <footer class="site-footer">© Happysoysauce</footer>
 
 </div>
+
+<script>
+    // 切换 Mod / 原理图目录
+    function switchTab(name, btn) {
+        document.querySelectorAll(".tab-panel").forEach(function (panel) {
+            panel.classList.remove("active");
+        });
+        document.getElementById("tab-" + name).classList.add("active");
+
+        document.querySelectorAll(".tab-btn").forEach(function (b) {
+            b.classList.remove("active");
+        });
+        btn.classList.add("active");
+    }
+</script>
 
 </body>
 </html>
